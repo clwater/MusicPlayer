@@ -11,12 +11,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/rela_main_toolbar"
+        android:background="#3C5F78"
         >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textview_main_title"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:paddingStart="10dp"
+            android:textSize="20sp"
+            android:textColor="#fff"
             android:text="titile"/>
 
         <RelativeLayout
@@ -24,41 +30,64 @@
             android:layout_height="wrap_content"
             android:padding="10dp">
 
-            <TextView
+            <RadioGroup
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/radio_group_controls"
+                android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="设置"
-                android:id="@+id/textview_main_setting"
+                android:layout_height="?android:attr/actionBarSize"
+                android:layout_gravity="end"
+                android:gravity="center_vertical"
+                tools:showIn="@layout/activity_main"
+                android:showDividers="beginning|middle|end"
                 android:layout_alignParentEnd="true"
-                android:padding="10dp"
-                />
-            
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="本地音乐"
-                android:id="@+id/textview_main_file"
-                android:padding="10dp"
-                android:layout_toLeftOf="@+id/textview_main_setting"
-                />
+                >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="音乐"
-                android:id="@+id/textview_main_player"
-                android:padding="10dp"
-                android:layout_toLeftOf="@+id/textview_main_file"
-                />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="播放列表"
-                android:id="@+id/textview_main_playerlist"
-                android:padding="10dp"
-                android:layout_toLeftOf="@+id/textview_main_player"
-                />
+                <RadioButton
+                    android:id="@+id/radiobutton_main_playerlist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/selector_main_nav_play_list"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    tools:button="@drawable/ic_main_nav_play_list_selected"
+                    tools:checked="true"
+                    android:padding="5dp"
+                    />
+
+
+                <RadioButton
+                    android:id="@+id/radiobutton_main_player"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/selector_main_nav_music"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    tools:button="@drawable/ic_main_nav_play_list_selected"
+                    android:padding="5dp"
+                    />
+
+                <RadioButton
+                    android:id="@+id/radiobutton_main_file"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/selector_main_nav_local_files"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    tools:button="@drawable/ic_main_nav_play_list_selected"
+                    android:padding="5dp"
+                    />
+
+                <RadioButton
+                    android:id="@+id/radiobutton_main_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/selector_main_nav_settings"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    tools:button="@drawable/ic_main_nav_play_list_selected"
+                    android:padding="5dp"
+                    />
+
+            </RadioGroup>
 
 
 
