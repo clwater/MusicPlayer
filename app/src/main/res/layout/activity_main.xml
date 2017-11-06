@@ -1,18 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="wdd.musicplayer.MainActivity">
+    tools:context="wdd.musicplayer.ui.activity.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/rela_main_toolbar"
+        >
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textview_main_title"
+            android:text="titile"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="设置"
+                android:id="@+id/textview_main_setting"
+                android:layout_alignParentEnd="true"
+                android:padding="10dp"
+                />
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="本地音乐"
+                android:id="@+id/textview_main_file"
+                android:padding="10dp"
+                android:layout_toLeftOf="@+id/textview_main_setting"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="音乐"
+                android:id="@+id/textview_main_player"
+                android:padding="10dp"
+                android:layout_toLeftOf="@+id/textview_main_file"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="播放列表"
+                android:id="@+id/textview_main_playerlist"
+                android:padding="10dp"
+                android:layout_toLeftOf="@+id/textview_main_player"
+                />
+
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rela_main_toolbar"
+        android:id="@+id/viewpager_main"
+        android:overScrollMode="never"
+        />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rela_main_toolbar"
+        android:id="@+id/fragmlayout_main"
+        android:visibility="gone">
+
+    </FrameLayout>
+
+</RelativeLayout>
