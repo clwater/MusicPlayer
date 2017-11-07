@@ -52,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
     ViewPager viewpager_main;
 
     //当前展示的页面
-    int index = 0;
+    //默认为1(音乐页面)
+    int index = 1;
 
     String[] titles = {"播放列表" , "音乐" , "本地音乐" , "设置"};
 
@@ -110,14 +111,10 @@ public class MainActivity extends AppCompatActivity {
     void changeFragment(){
         //手动更改ViewPager的页面选择
         viewpager_main.setCurrentItem(index);
-
-        Log.d("wdd" , "index: " + index);
-
+        //设置标题栏中标签的展示情况
         radioButtons.get(index).setChecked(true);
-
         //根据当前页面情况来设置标题信息
         textview_main_title.setText(titles[index]);
-
     }
 
 

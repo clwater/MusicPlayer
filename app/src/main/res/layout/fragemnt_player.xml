@@ -1,11 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal"
+    android:background="@color/baseBackgroundColor">
 
-    <TextView
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="player"/>
+        android:layout_alignParentBottom="true"
+        android:id="@+id/rela_player_bottom"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:background="@color/baseBackgroundColor"
+        >
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/button_player_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="center"
+            android:layout_margin="10dp"
+            app:srcCompat="@drawable/ic_play_mode_shuffle"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/button_player_last"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="center"
+            android:layout_margin="10dp"
+            app:srcCompat="@drawable/ic_play_last"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/button_player_toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_play"
+            android:scaleType="center"
+            android:layout_margin="10dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/button_player_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_play_next"
+            android:scaleType="center"
+            android:layout_margin="10dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/button_player_favoritee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="center"
+            android:layout_margin="10dp"
+            app:srcCompat="@drawable/ic_favorite_no"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            />
+
+    </LinearLayout>
+
 
 </RelativeLayout>

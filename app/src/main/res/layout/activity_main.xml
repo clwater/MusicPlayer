@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/rela_main_toolbar"
-        android:background="#3C5F78"
+        android:background="@color/baseBackgroundColor"
         >
 
         <TextView
@@ -22,7 +22,7 @@
             android:layout_gravity="center"
             android:paddingStart="10dp"
             android:textSize="20sp"
-            android:textColor="#fff"
+            android:textColor="@color/baseTextColor"
             android:text="titile"/>
 
         <RelativeLayout
