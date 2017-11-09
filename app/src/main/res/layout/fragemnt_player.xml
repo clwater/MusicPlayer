@@ -3,8 +3,88 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center_horizontal"
     android:background="@color/baseBackgroundColor">
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/textview_player_name"
+        >
+
+        <wdd.musicplayer.ui.weiget.ShadowImageView
+            android:layout_width="260dp"
+            android:layout_height="260dp"
+            android:src="@drawable/default_record_album"
+            android:layout_centerInParent="true"
+            />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textview_player_name"
+        android:text="textview_player_name"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/textview_player_artist"
+        android:padding="10dp"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textview_player_artist"
+        android:text="textview_player_artist"
+        android:layout_centerHorizontal="true"
+        android:padding="10dp"
+        android:textSize="14sp"
+        android:layout_above="@+id/linearlayout_player_seek"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/rela_player_bottom"
+        android:gravity="center"
+        android:id="@+id/linearlayout_player_seek"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textview_player_nowtime"
+            android:text="0:00"
+            android:padding="10dp"
+            />
+
+        <android.support.v7.widget.AppCompatSeekBar
+            android:id="@+id/seekbar_player_seekbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:max="1000"
+            tools:progress="600"
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textview_player_endtime"
+            android:text="0:00"
+            android:padding="10dp"
+            />
+
+
+
+    </LinearLayout>
 
 
     <LinearLayout
@@ -12,7 +92,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:id="@+id/rela_player_bottom"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:gravity="center"
         android:background="@color/baseBackgroundColor"

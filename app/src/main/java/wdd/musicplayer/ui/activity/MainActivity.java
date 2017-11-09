@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         //初始化ViewPager信息 将Fragment页面添加其中
         initFragment();
 
+        //设置系统通知栏颜色
         StatusBarCompat.setStatusBarColor(this , Color.parseColor("#3C5F78"));
     }
 
