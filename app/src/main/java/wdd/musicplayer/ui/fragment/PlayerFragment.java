@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -16,6 +18,7 @@ import wdd.musicplayer.R;
 import wdd.musicplayer.model.Music;
 import wdd.musicplayer.model.PlayMode;
 import wdd.musicplayer.ui.weiget.ShadowImageView;
+import wdd.musicplayer.utils.MediaUtils;
 
 /**
  * Created by gengzhibo on 2017/11/6.
@@ -51,6 +54,8 @@ public class PlayerFragment extends Fragment {
 
         //初始化
         init(music);
+
+
 
         return view;
 
@@ -95,6 +100,7 @@ public class PlayerFragment extends Fragment {
             case PlayMode.SHUFFLE:
                 button_player_mode.setImageResource(R.drawable.ic_play_mode_shuffle);
                 break;
+            default:break;
         }
     }
 
