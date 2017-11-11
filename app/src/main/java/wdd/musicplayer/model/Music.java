@@ -6,5 +6,6 @@ package wdd.musicplayer.model;
 
 public class Music {
     public String name , artist;
-    public boolean favorite , isPlaying = false;
+    public boolean favorite = true , isPlaying = true;
+//    public int mode = 0;
 }
