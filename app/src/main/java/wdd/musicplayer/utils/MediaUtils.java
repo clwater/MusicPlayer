@@ -1,4 +1,4 @@
-package wdd.musicplayer.Utils;
+package wdd.musicplayer.utils;
 
 import android.content.Context;
 import android.database.Cursor;

@@ -7,4 +7,6 @@
     <color name="baseTextColor">#DDF9FF</color>
     <color name="baseBackgroundColor">#3C5F78</color>
 
+    <color name="tagSelect">#9eb4b9</color>
+
 </resources>

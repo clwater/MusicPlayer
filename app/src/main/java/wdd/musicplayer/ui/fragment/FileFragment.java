@@ -6,21 +6,33 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import wdd.musicplayer.R;
-import wdd.musicplayer.Utils.MediaUtils;
 import wdd.musicplayer.model.Music;
+import wdd.musicplayer.utils.MediaUtils;
 
 /**
  * Created by gengzhibo on 2017/11/6.
  */
 
 public class FileFragment extends Fragment {
-    List<Music> DBMusicList = new ArrayList<Music>();
+    List<Music> dBMusicList = new ArrayList<Music>();
+
+    @BindView(R.id.textview_file_alltag)
+    TextView textview_file_alltag;
+
+    @BindView(R.id.textview_file_localtag)
+    TextView textview_file_localtag;
+
+
+    private boolean isAllTag = true;
 
     @Nullable
     @Override
@@ -35,6 +47,28 @@ public class FileFragment extends Fragment {
     }
 
     private void init() {
-        DBMusicList = MediaUtils.DBInfo(getActivity());
+        dBMusicList = MediaUtils.DBInfo(getActivity());
+    }
+
+    @OnClick(R.id.textview_file_alltag)
+    public void OnClick_text_file_alltag(){
+        isAllTag = false;
+        changeTag();
+    }
+
+    @OnClick(R.id.textview_file_localtag)
+    public void OnClick_textview_file_localtag(){
+        isAllTag = true;
+        changeTag();
+    }
+
+    private void changeTag() {
+        if (isAllTag){
+            textview_file_alltag.setBackgroundResource(R.drawable.selector_file_all);
+            textview_file_localtag.setBackgroundResource(R.drawable.selector_file_local_slect);
+        }else {
+            textview_file_alltag.setBackgroundResource(R.drawable.selector_file_all_slect);
+            textview_file_localtag.setBackgroundResource(R.drawable.selector_file_local);
+        }
     }
 }

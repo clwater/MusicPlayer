@@ -3,12 +3,38 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/baseBackgroundColor"
-    >
+    android:background="@color/baseBackgroundColor">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="file"/>
+        android:gravity="center"
+        android:paddingTop="10dp">
 
+        <TextView
+            android:layout_width="100dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:id="@+id/textview_file_alltag"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="@drawable/selector_file_all_slect"
+            android:text="所有歌曲"/>
+
+
+        <TextView
+            android:layout_width="100dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:id="@+id/textview_file_localtag"
+            android:background="@drawable/selector_file_local"
+            android:text="文件夹"/>
+
+    </LinearLayout>
 </RelativeLayout>
