@@ -11,16 +11,20 @@ import butterknife.ButterKnife;
 import wdd.musicplayer.R;
 
 /**
- * 播放列表页面
+ * 通过文件夹获取列表页面
  */
 
-public class PlayerListFragment extends Fragment {
+public class LocalFileFragment extends Fragment {
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragemnt_playlist, container, false);
+        View view = inflater.inflate(R.layout.fragemnt_file_local, container, false);
         ButterKnife.bind(this, view);
-        // TODO Use fields...
+
+        //初始化相关信息
+//        init();
+
         return view;
 
     }

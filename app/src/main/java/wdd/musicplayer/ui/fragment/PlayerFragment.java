@@ -21,7 +21,7 @@ import wdd.musicplayer.ui.weiget.ShadowImageView;
 import wdd.musicplayer.utils.MediaUtils;
 
 /**
- * Created by gengzhibo on 2017/11/6.
+ * 播放页面
  */
 
 public class PlayerFragment extends Fragment {

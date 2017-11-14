@@ -11,7 +11,7 @@ import butterknife.ButterKnife;
 import wdd.musicplayer.R;
 
 /**
- * Created by gengzhibo on 2017/11/6.
+ * 设置页面
  */
 
 public class SettingFragment extends Fragment {

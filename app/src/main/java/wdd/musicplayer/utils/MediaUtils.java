@@ -10,7 +10,8 @@ import java.util.List;
 import wdd.musicplayer.model.Music;
 
 /**
- * Created by yszsyf on 2017/11/12.
+ * 系统数据库工具
+ * 用于从数据库获取音频信息
  */
 
 public class MediaUtils {

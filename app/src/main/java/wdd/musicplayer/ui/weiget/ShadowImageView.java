@@ -19,7 +19,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
 /**
- * Created by gengzhibo on 2017/11/9.
+ * 自定义view用于播放页面的选择专辑图片
  */
 
 @SuppressLint("AppCompatCustomView")

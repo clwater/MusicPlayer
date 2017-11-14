@@ -9,7 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.List;
 
 /**
- * Created by gengzhibo on 2017/11/6.
+ * 主页面ViewPager的adapter用于设置数据
  */
 
 public class FragmentAdapter extends FragmentPagerAdapter {
