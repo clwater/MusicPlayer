@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:id="@+id/linearlayout_player_tag"
-        android:paddingTop="10dp"
         android:paddingBottom="10dp">
 
         <TextView

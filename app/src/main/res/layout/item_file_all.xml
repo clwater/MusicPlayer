@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="54dp"
     android:background="@color/item.background"
@@ -32,33 +31,40 @@
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:id="@+id/text_view_name"
+            android:id="@+id/textview_fileitem_name"
             android:text="A little bit longer"
             android:singleLine="true"
             android:textSize="14sp"
-            android:textColor="@color/baseTextColor"
+            android:textColor="@color/item.titile"
             />
 
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:id="@+id/text_view_artist"
+            android:id="@+id/textview_fileitem_artist"
             android:text="A little bit longer"
             android:singleLine="true"
-            android:textSize="14sp"
-            android:textColor="@color/baseTextColor"
+            android:textSize="12sp"
+            android:textColor="@color/item.text"
             />
     </LinearLayout>
 
-    <!--<TextView-->
-        <!--style="@style/MP.Theme.TextAppearance.List.Hint"-->
-        <!--android:id="@+id/text_view_duration"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:layout_marginEnd="@dimen/mp.margin.large"-->
-        <!--android:layout_marginRight="@dimen/mp.margin.large"-->
-        <!--android:layout_marginTop="@dimen/mp.margin.normal"-->
-        <!--tools:text="03:22"-->
-        <!--/>-->
+    <TextView
+        android:id="@+id/textview_fileitem_time"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="1:23"
+        android:textSize="12sp"
+        android:textColor="@color/item.text"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:paddingEnd="10dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/item.driver"
+        android:layout_alignParentBottom="true"
+        />
 </RelativeLayout>

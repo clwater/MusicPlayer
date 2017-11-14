@@ -59,7 +59,7 @@ public class FileFragment extends Fragment {
     private void init() {
 
         initFragment();
-
+        changeTag();
     }
 
     //初始化下部列表列表Fragment信息
@@ -101,13 +101,17 @@ public class FileFragment extends Fragment {
         if (!isAllTag){
             //设置顶部tag样式
             textview_file_alltag.setBackgroundResource(R.drawable.selector_file_all);
+            textview_file_alltag.setTextColor(getResources().getColor(R.color.baseTextColor));
             textview_file_localtag.setBackgroundResource(R.drawable.selector_file_local_slect);
+            textview_file_localtag.setTextColor(getResources().getColor(R.color.tagTextClolor));
             //设置下部列表页面
             transaction.show(localFileFragment);
             transaction.hide(allFileFragment);
         }else {
             textview_file_alltag.setBackgroundResource(R.drawable.selector_file_all_slect);
+            textview_file_alltag.setTextColor(getResources().getColor(R.color.tagTextClolor));
             textview_file_localtag.setBackgroundResource(R.drawable.selector_file_local);
+            textview_file_localtag.setTextColor(getResources().getColor(R.color.baseTextColor));
             transaction.show(allFileFragment);
             transaction.hide(localFileFragment);
         }

@@ -1,5 +1,8 @@
 package wdd.musicplayer.ui.fragment;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.TextView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -15,10 +24,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import wdd.musicplayer.R;
+import wdd.musicplayer.eventbus.EB_PlayerMusic;
 import wdd.musicplayer.model.Music;
 import wdd.musicplayer.model.PlayMode;
+import wdd.musicplayer.ui.adapter.AllFileAdapter;
 import wdd.musicplayer.ui.weiget.ShadowImageView;
 import wdd.musicplayer.utils.MediaUtils;
+import wdd.musicplayer.utils.TimeUtils;
 
 /**
  * 播放页面
@@ -34,11 +46,27 @@ public class PlayerFragment extends Fragment {
     @BindView(R.id.button_player_toggle)
     ImageView button_player_toggle;
 
+    //歌曲图片
     @BindView(R.id.shadowImageView_player_image)
     ShadowImageView shadowImageView_player_image;
 
+    //当前歌曲是否被收藏
     @BindView(R.id.button_player_favorite)
     ImageView button_player_favorite;
+
+    //歌曲的名称及作者
+    @BindView(R.id.textview_player_name)
+    TextView textview_player_name;
+    @BindView(R.id.textview_player_artist)
+    TextView textview_player_artist;
+
+    //当前播放时间及结束时间及进度条
+    @BindView(R.id.textview_player_nowtime)
+    TextView textview_player_nowtime;
+    @BindView(R.id.textview_player_endtime)
+    TextView textview_player_endtime;
+    @BindView(R.id.seekbar_player_seekbar)
+    SeekBar seekbar_player_seekbar;
 
     Music music = new Music();
 
@@ -50,11 +78,11 @@ public class PlayerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragemnt_player, container, false);
         ButterKnife.bind(this, view);
+        EventBus.getDefault().register(PlayerFragment.this);
 
 
         //初始化
         init(music);
-
 
 
         return view;
@@ -70,6 +98,37 @@ public class PlayerFragment extends Fragment {
 
 
     }
+
+
+    /**
+     * @param e
+     * 通过EventBus接收播放音乐的请求
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void EVENT_EB_PlayerMusic(EB_PlayerMusic e){
+        if(e.tag.equals(AllFileAdapter.Tag)) {
+            playingMusic(e.music);
+        }
+    }
+
+    //更新页面歌曲信息
+    private void playingMusic(Music music) {
+        Bitmap bitmap = MediaUtils.parseAlbum(music);
+        if (bitmap == null) {
+            shadowImageView_player_image.setImageResource(R.drawable.default_record_album);
+        } else {
+            shadowImageView_player_image.setImageBitmap(MediaUtils.getCroppedBitmap(bitmap));
+        }
+
+        textview_player_name.setText(music.name);
+        textview_player_artist.setText(music.artist);
+
+        music.isPlaying = !music.isPlaying;
+        updatePlayIcon(music.isPlaying);
+
+        textview_player_endtime.setText(TimeUtils.tranTime(music.longTime));
+    }
+
 
     private void updatePlayIcon(boolean isPlaying) {
         if (!isPlaying){
@@ -137,5 +196,11 @@ public class PlayerFragment extends Fragment {
     @OnClick(R.id.button_player_favorite)
     public void onClick_button_player_favorite(){
         updatePlayFavorite();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(getActivity());
     }
 }
