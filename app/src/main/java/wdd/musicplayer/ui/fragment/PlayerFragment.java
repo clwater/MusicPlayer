@@ -123,10 +123,12 @@ public class PlayerFragment extends Fragment {
         textview_player_name.setText(music.name);
         textview_player_artist.setText(music.artist);
 
-        music.isPlaying = !music.isPlaying;
-        updatePlayIcon(music.isPlaying);
+        this.music.isPlaying = false;
+        shadowImageView_player_image.cancelRotateAnimation();
+        updatePlayIcon(this.music.isPlaying);
 
         textview_player_endtime.setText(TimeUtils.tranTime(music.longTime));
+
     }
 
 
