@@ -26,7 +26,7 @@ import butterknife.OnClick;
 import wdd.musicplayer.R;
 import wdd.musicplayer.eventbus.EB_PlayerMusic;
 import wdd.musicplayer.model.Music;
-import wdd.musicplayer.model.PlayMode;
+import wdd.musicplayer.model.PlayModel;
 import wdd.musicplayer.ui.adapter.AllFileAdapter;
 import wdd.musicplayer.ui.weiget.ShadowImageView;
 import wdd.musicplayer.utils.MediaUtils;
@@ -71,7 +71,7 @@ public class PlayerFragment extends Fragment {
     Music music = new Music();
 
     //播放模式
-    PlayMode playMode = new PlayMode();
+    PlayModel playModel = new PlayModel();
 
     @Nullable
     @Override
@@ -147,18 +147,18 @@ public class PlayerFragment extends Fragment {
 
     //更换播放模式图标
     private void updatePlayModeIcon() {
-        playMode.next();
-        switch (playMode.index){
-            case PlayMode.SINGLE:
+        playModel.next();
+        switch (playModel.index){
+            case PlayModel.SINGLE:
                 button_player_mode.setImageResource(R.drawable.ic_play_mode_single);
                 break;
-            case PlayMode.LOOP:
+            case PlayModel.LOOP:
                 button_player_mode.setImageResource(R.drawable.ic_play_mode_loop);
                 break;
-            case PlayMode.LIST:
+            case PlayModel.LIST:
                 button_player_mode.setImageResource(R.drawable.ic_play_mode_list);
                 break;
-            case PlayMode.SHUFFLE:
+            case PlayModel.SHUFFLE:
                 button_player_mode.setImageResource(R.drawable.ic_play_mode_shuffle);
                 break;
             default:break;

@@ -4,7 +4,7 @@ package wdd.musicplayer.model;
  * Created by yszsyf on 2017/11/11.
  */
 
-public class PlayMode {
+public class PlayModel {
     public final static int SINGLE = 0,
                LOOP = 1,
                LIST = 2,
@@ -12,7 +12,7 @@ public class PlayMode {
     public int index;
 
     //构造函数 初始化模式为LOOP
-    public PlayMode() {
+    public PlayModel() {
         index = SINGLE;
     }
 
