@@ -26,7 +26,7 @@ import wdd.musicplayer.ui.activity.ChooseLoaclFileActivity;
 public class ChooseFileAdapter extends RecyclerView.Adapter<ChooseFileAdapter.AllFileAdapterHolder> {
     private final LayoutInflater layoutInflater;
     private final Context context;
-    private static List<FileModel> list = new ArrayList<>();
+    private List<FileModel> list = new ArrayList<>();
 
     //构造函数 设置相关变量
     public ChooseFileAdapter(Context context , List<FileModel> list) {

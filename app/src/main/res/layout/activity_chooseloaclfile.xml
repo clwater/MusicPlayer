@@ -30,6 +30,7 @@
                 android:layout_centerVertical="true"
                 android:background="@drawable/ic_select_all"
                 android:layout_alignParentEnd="true"
+                android:id="@+id/imagebutton_choose_select"
                 />
 
         </RelativeLayout>

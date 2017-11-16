@@ -8,6 +8,9 @@ import android.util.Log;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -57,6 +60,9 @@ public class FileUtils {
                 });
             }
         }
+        if (!haveMusic) {
+            findMusicInFileBack.onCompleted(list);
+        }
     }
 
     public static boolean checkIsMusic(String name){
@@ -80,7 +86,11 @@ public class FileUtils {
         List<FileModel> fileModelList = new ArrayList<>();
 
         File file = new File(path);
-        File[] files = file.listFiles();
+        File[] files = FileUtils.sort(file.listFiles());
+
+        String[] a = new String[]{"1" ,"2"};
+        Arrays.sort(a , String.CASE_INSENSITIVE_ORDER);
+
         for (File childFile : files){
             FileModel fileModel = new FileModel();
             fileModel.path = childFile.getPath();
@@ -92,7 +102,7 @@ public class FileUtils {
                 fileModel.size = showLongFileSzie(childFile.length());
             }else if (childFile.isDirectory()){
                 fileModel.type = 0;
-                fileModel.size = floderChild(file) + " 项目";
+                fileModel.size = floderChild(childFile) + " 项目";
             }else {
                 fileModel.type = 2;
                 fileModel.size = showLongFileSzie(childFile.length());
@@ -142,4 +152,35 @@ public class FileUtils {
     public interface FindMusicInFileBack{
         void onCompleted(List<Music> musicList);
     }
+
+    public static File[] sort(File[] filelists) {
+        //将数组转为集合
+        List<File> files = Arrays.asList(filelists);
+        //利用集合工具类排序
+        Collections.sort(files, new FileCompatator());
+        //将文件重新转为数组
+        File[] filelists1 = files.toArray(new File[files.size()]);
+
+        return filelists1;
+    }
+}
+
+class FileCompatator implements Comparator<File> {
+
+    @Override
+    public int compare(File f1, File f2) {
+        // TODO Auto-generated method stub
+        if (f1.isDirectory() && f2.isDirectory()) {// 都是目录
+
+            return f1.getName().compareToIgnoreCase(f2.getName());//都是目录时按照名字排序
+        } else if (f1.isDirectory() && f2.isFile()) {//目录与文件.目录在前
+            return -1;
+        } else if (f2.isDirectory() && f1.isFile()) {//文件与目录
+            return 1;
+        } else {
+            return f1.getName().compareToIgnoreCase(f2.getName());//都是文件
+        }
+
+    }
+
 }

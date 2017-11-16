@@ -22,7 +22,6 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        app:srcCompat="@drawable/ic_folder"
         />
 
     <LinearLayout

@@ -3,6 +3,7 @@ package wdd.musicplayer.db;
 import android.content.Context;
 
 import com.litesuits.orm.LiteOrm;
+import com.litesuits.orm.db.assit.QueryBuilder;
 
 import java.util.List;
 
@@ -53,5 +54,13 @@ public class DataBaseManager {
      */
     public <T> List<T> queryAll(Class<T> cla) {
         return liteOrm.query(cla);
+    }
+
+    /**
+     * 查询某字段 等于 Value的值
+     */
+    @SuppressWarnings("unchecked")
+    public <T> List<T> queryByWhere(Class<T> cla, String field, String[] value) {
+        return liteOrm.query(new QueryBuilder(cla).where(field + "=?", value));
     }
 }

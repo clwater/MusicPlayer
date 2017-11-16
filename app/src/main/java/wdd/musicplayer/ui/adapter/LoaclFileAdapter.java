@@ -30,7 +30,7 @@ public class LoaclFileAdapter extends RecyclerView.Adapter<LoaclFileAdapter.AllF
     private final LayoutInflater layoutInflater;
     private final Context context;
     private static List<FileModel> list = new ArrayList<>();
-    public static String Tag = "allfile";
+    public  String Tag = "allfile";
 
     //构造函数 设置相关变量
     public LoaclFileAdapter(Context context , List<FileModel> list) {
