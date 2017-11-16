@@ -11,9 +11,10 @@ import com.litesuits.orm.db.enums.AssignType;
 
 @Table("FileModel")
 public class FileModel {
-    public FileModel(String name, String path) {
+    public FileModel(String name, String path , int number) {
         this.name = name;
         this.path = path;
+        this.number = number;
     }
 
     public FileModel() {
@@ -25,8 +26,9 @@ public class FileModel {
 
     @NotNull
     public String name;
-
     @NotNull
     public String path;
+    @NotNull
+    public int number;
 
 }

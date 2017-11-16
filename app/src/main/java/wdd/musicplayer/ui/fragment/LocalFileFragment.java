@@ -45,12 +45,15 @@ public class LocalFileFragment extends Fragment {
     private void initDB() {
         if (SharedPreferencesUtils.getFirst(getContext())){
             String MusicPath = Environment.getExternalStorageDirectory() + "/Music/";
-            FileModel fileModel = new FileModel("Music" , MusicPath);
+            FileModel fileModel = new FileModel("Music" , MusicPath , 0);
             DataBaseManager.getInstance(getContext()).insert(fileModel);
             SharedPreferencesUtils.setFirst(getContext());
         }
 
         List<FileModel> list = DataBaseManager.getInstance(getContext()).queryAll(FileModel.class);
-        Log.d("wdd" , list.get(0).path);
+
+        for (int i = 0 ; i < list.size() ;i++) {
+            Log.d("wdd", list.get(i).path);
+        }
     }
 }
