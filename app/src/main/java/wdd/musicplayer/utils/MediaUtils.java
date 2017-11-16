@@ -43,7 +43,9 @@ public class MediaUtils {
                 MediaStore.Audio.Media.DURATION,
                 MediaStore.Audio.Media.DATA,
                 MediaStore.Audio.Media.ARTIST,
-                MediaStore.Audio.Media.ALBUM_ID
+                MediaStore.Audio.Media.ALBUM_ID,
+                MediaStore.Audio.Media.DISPLAY_NAME
+
 //                MediaStore.Audio.Media.ALBUM,
 //                MediaStore.Audio.Media.SIZE
         };
@@ -58,6 +60,7 @@ public class MediaUtils {
             music.path = cursor.getString(3);
             music.artist = cursor.getString(4);
             music.ALBUM_ID = cursor.getLong(5);
+            music.filename = cursor.getString(6);
             musicList.add(music);
         }
 

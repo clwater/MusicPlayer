@@ -28,6 +28,7 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:textColor="@color/item.titile"
+                android:background="@color/item.background"
                 android:text="添加文件夹"
                 />
 

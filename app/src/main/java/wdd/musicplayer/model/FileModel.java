@@ -6,7 +6,8 @@ import com.litesuits.orm.db.annotation.Table;
 import com.litesuits.orm.db.enums.AssignType;
 
 /**
- * Created by gengzhibo on 2017/11/15.
+ * 数据库表FileModel模型
+ * 本地音乐-文件夹model
  */
 
 @Table("FileModel")
@@ -30,5 +31,10 @@ public class FileModel {
     public String path;
     @NotNull
     public int number;
+
+    public String createTime;
+    public String size;
+    //文件类型 0=文件夹 1=音频文件 2=其他文件
+    public int type;
 
 }

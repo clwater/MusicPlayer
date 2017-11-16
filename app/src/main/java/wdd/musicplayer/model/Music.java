@@ -7,7 +7,7 @@ import android.net.Uri;
  */
 
 public class Music {
-    public String name , artist , path ;
+    public String name , artist , path , filename ;
     public Long ALBUM_ID , id ;
     public int longTime;
     public boolean favorite = true , isPlaying = true;
