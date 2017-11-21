@@ -17,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import wdd.musicplayer.R;
 import wdd.musicplayer.model.FileModel;
+import wdd.musicplayer.model.Music;
 import wdd.musicplayer.ui.activity.ChooseLoaclFileActivity;
 
 /**
@@ -26,10 +27,10 @@ import wdd.musicplayer.ui.activity.ChooseLoaclFileActivity;
 public class FileShowAdapter extends RecyclerView.Adapter<FileShowAdapter.AllFileAdapterHolder> {
     private final LayoutInflater layoutInflater;
     private final Context context;
-    private List<FileModel> list = new ArrayList<>();
+    private List<Music> list = new ArrayList<>();
 
     //构造函数 设置相关变量
-    public FileShowAdapter(Context context , List<FileModel> list) {
+    public FileShowAdapter(Context context , List<Music> list) {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         this.list = list;
@@ -45,16 +46,9 @@ public class FileShowAdapter extends RecyclerView.Adapter<FileShowAdapter.AllFil
     @Override
     public void onBindViewHolder(AllFileAdapterHolder holder, int position) {
         //获取当前对象
-        FileModel fileModel = list.get(position);
-
-
-        holder.textview_choose_name.setText(fileModel.name);
-        holder.textview_choose_time.setText(fileModel.createTime);
-
-
-        holder.textview_choose_info.setText(info);
-
-
+        Music music = list.get(position);
+        holder.textview_fileshow_name.setText(music.name);
+        holder.textview_fileshow_info.setText(music.artist );
     }
 
     @Override
