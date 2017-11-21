@@ -63,4 +63,25 @@ public class DataBaseManager {
     public <T> List<T> queryByWhere(Class<T> cla, String field, String[] value) {
         return liteOrm.query(new QueryBuilder(cla).where(field + "=?", value));
     }
+
+    /**
+     * 删除某个
+     */
+    public <T> void delete(T t) {
+        liteOrm.delete(t);
+    }
+
+    /**
+     * 更新某个数据
+     */
+    public <T> int update(T t) {
+        return liteOrm.update(t);
+    }
+
+    /**
+     * 根据id查询
+     */
+    public <T> T query(long id, Class<T> clazz) {
+        return liteOrm.queryById(id, clazz);
+    }
 }

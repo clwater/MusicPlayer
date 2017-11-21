@@ -1,9 +1,12 @@
 package wdd.musicplayer.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,10 +19,16 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnItemClick;
 import wdd.musicplayer.R;
+import wdd.musicplayer.db.DataBaseManager;
 import wdd.musicplayer.eventbus.EB_PlayerMusic;
+import wdd.musicplayer.eventbus.EB_updataLoaclFileList;
 import wdd.musicplayer.model.FileModel;
 import wdd.musicplayer.model.Music;
+import wdd.musicplayer.ui.activity.LoaclFileShowActivity;
+import wdd.musicplayer.utils.FileUtils;
 import wdd.musicplayer.utils.TimeUtils;
 
 /**
@@ -29,7 +38,7 @@ import wdd.musicplayer.utils.TimeUtils;
 public class LoaclFileAdapter extends RecyclerView.Adapter<LoaclFileAdapter.AllFileAdapterHolder> {
     private final LayoutInflater layoutInflater;
     private final Context context;
-    private static List<FileModel> list = new ArrayList<>();
+    private  List<FileModel> list = new ArrayList<>();
     public  String Tag = "allfile";
 
     //构造函数 设置相关变量
@@ -63,7 +72,7 @@ public class LoaclFileAdapter extends RecyclerView.Adapter<LoaclFileAdapter.AllF
         return list == null ? 0 : list.size();
     }
 
-    public static class AllFileAdapterHolder extends RecyclerView.ViewHolder {
+    public  class AllFileAdapterHolder extends RecyclerView.ViewHolder {
 
         //初始化item相关组件
         @BindView(R.id.textview_fileitem_name)
@@ -73,21 +82,66 @@ public class LoaclFileAdapter extends RecyclerView.Adapter<LoaclFileAdapter.AllF
         @BindView(R.id.imagebutton_fileitem_action)
         ImageView imagebutton_fileitem_action;
 
-        AllFileAdapterHolder(View view) {
+        AllFileAdapterHolder(final View view) {
             super(view);
             ButterKnife.bind(this , view);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("wdd", "onClick--> position = " + getPosition());
-//
-//                    //通过EventBus发送播放音频的请求
-//                    EB_PlayerMusic eb_playerMusic = new EB_PlayerMusic();
-//                    eb_playerMusic.music = list.get(getPosition());
-//                    eb_playerMusic.tag = Tag;
-//                    EventBus.getDefault().post(eb_playerMusic);
+                    Intent intent = new Intent(context , LoaclFileShowActivity.class);
+                    intent.putExtra("path" , list.get(getAdapterPosition()).path);
+                    context.startActivity(intent);
+                }
+            });
+
+            imagebutton_fileitem_action.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showPopupMenu(imagebutton_fileitem_action , getAdapterPosition());
+
                 }
             });
         }
+
     }
+
+
+    private  void showPopupMenu(View view , final int postion) {
+        // 这里的view代表popupMenu需要依附的view
+        PopupMenu popupMenu = new PopupMenu(context, view);
+        // 获取布局文件
+        popupMenu.getMenuInflater().inflate(R.menu.floder_menu, popupMenu.getMenu());
+        popupMenu.show();
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                FileModel fileModel = list.get(postion);
+
+                switch (item.getItemId()){
+                    case R.id.floder_insert:
+                        break;
+                    case R.id.floder_create:
+                        break;
+                    case R.id.floder_refresh:
+                        final FileModel checkFile = DataBaseManager.getInstance(context).query(fileModel.id , FileModel.class);
+                        FileUtils.findMusicInFile(context , checkFile.path , new FileUtils.FindMusicInFileBack() {
+                            @Override
+                            public void onCompleted(List<Music> musicList) {
+                                checkFile.number = musicList.size();
+                                DataBaseManager.getInstance(context).update(checkFile);
+                                EventBus.getDefault().post(new EB_updataLoaclFileList());
+                            }
+                        });
+                        break;
+                    case R.id.floder_del:
+                        DataBaseManager.getInstance(context).delete(fileModel);
+                        EventBus.getDefault().post(new EB_updataLoaclFileList());
+                        break;
+                }
+                return false;
+            }
+        });
+    }
+
 }

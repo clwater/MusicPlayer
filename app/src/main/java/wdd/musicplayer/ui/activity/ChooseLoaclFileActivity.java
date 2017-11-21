@@ -108,8 +108,6 @@ public class ChooseLoaclFileActivity extends AppCompatActivity {
                     FileModel fileModel = new FileModel(file.getName() , file.getPath() , musicList.size());
                     DataBaseManager.getInstance(context).insert(fileModel);
                     EventBus.getDefault().post(new EB_updataLoaclFileList());
-
-
                 }
             });
         }

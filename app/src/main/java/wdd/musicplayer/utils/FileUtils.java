@@ -32,17 +32,28 @@ public class FileUtils {
         }
 
         final File[] files = file.listFiles();
+
+        int musicNumber = 0;
+        for (File file1 : files){
+            if (checkIsMusic(file1.getName())){
+                musicNumber++;
+            }
+        }
+
+        int musicIndex = 0;
         for (int i = 0; i < files.length ; i++){
 //        for (final File childFile : files){
             final  File childFile = files[i];
             String filename = childFile.getName();
 
             if (checkIsMusic(filename)){
+                musicIndex++;
                 haveMusic = true;
             }
 
             if (haveMusic){
-                final int finalI = i;
+                final int finalMusicNumber = musicNumber;
+                final int finalMusicIndex = musicIndex;
                 updateFile(context, childFile.getPath(), new UpdateFileBack() {
                     @Override
                     public void onScanCompleted(String path, Uri uri) {
@@ -53,7 +64,7 @@ public class FileUtils {
                                 list.add(music);
                             }
                         }
-                        if (finalI == files.length - 1){
+                        if (finalMusicIndex >= finalMusicNumber){
                             findMusicInFileBack.onCompleted(list);
                         }
                     }

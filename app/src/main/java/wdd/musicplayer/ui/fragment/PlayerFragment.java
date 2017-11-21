@@ -73,12 +73,17 @@ public class PlayerFragment extends Fragment {
     //播放模式
     PlayModel playModel = new PlayModel();
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(PlayerFragment.this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragemnt_player, container, false);
         ButterKnife.bind(this, view);
-        EventBus.getDefault().register(PlayerFragment.this);
 
 
         //初始化
@@ -202,7 +207,7 @@ public class PlayerFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         EventBus.getDefault().unregister(getActivity());
+        super.onDestroyView();
     }
 }

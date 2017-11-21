@@ -8,10 +8,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="NoTitle" parent="AppTheme">
+    <style name="NightAppTheme.popMenuStyle" parent="@style/Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@color/baseBackgroundColor</item>
+    </style>
+
+    <style name="MusicPlayer" parent="AppTheme">
         <item name="windowNoTitle">true</item>
         <item name="android:textColor">@color/baseTextColor</item>
+        <item name="popupMenuStyle">@style/NightAppTheme.popMenuStyle</item>
     </style>
+
+
 
 
 </resources>

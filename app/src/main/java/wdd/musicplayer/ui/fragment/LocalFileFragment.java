@@ -6,9 +6,11 @@ import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -30,6 +32,7 @@ import wdd.musicplayer.eventbus.EB_updataLoaclFileList;
 import wdd.musicplayer.model.FileModel;
 import wdd.musicplayer.model.Music;
 import wdd.musicplayer.ui.activity.ChooseLoaclFileActivity;
+import wdd.musicplayer.ui.activity.MainActivity;
 import wdd.musicplayer.ui.adapter.LoaclFileAdapter;
 import wdd.musicplayer.utils.FileUtils;
 import wdd.musicplayer.utils.SharedPreferencesUtils;
@@ -54,12 +57,18 @@ public class LocalFileFragment extends Fragment {
         EventBus.getDefault().unregister(getContext());
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(LocalFileFragment.this);
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragemnt_file_local, container, false);
         ButterKnife.bind(this, view);
-        EventBus.getDefault().register(LocalFileFragment.this);
 
         //初始化相关信息
         init();
@@ -95,23 +104,23 @@ public class LocalFileFragment extends Fragment {
 //        }
     }
 
-//    private void initDB() {
-//        if (SharedPreferencesUtils.getFirst(getContext())){
-//
-//
-//            String MusicPath = Environment.getExternalStorageDirectory() + "/Music/";
-//            final File file = new File(MusicPath);
-//            FileUtils.findMusicInFile(getContext() , file.getPath() , new FileUtils.FindMusicInFileBack() {
-//                @Override
-//                public void onCompleted(List<Music> musicList) {
-//                    FileModel fileModel = new FileModel(file.getName() , file.getPath() , musicList.size());
-//                    DataBaseManager.getInstance(getContext()).insert(fileModel);
-//                    SharedPreferencesUtils.setFirst(getContext());
-//                }
-//            });
-//
-//        }
-//    }
+    private void initDB() {
+        if (SharedPreferencesUtils.getFirst(getContext())){
+
+
+            String MusicPath = Environment.getExternalStorageDirectory() + "/Music/";
+            final File file = new File(MusicPath);
+            FileUtils.findMusicInFile(getContext() , file.getPath() , new FileUtils.FindMusicInFileBack() {
+                @Override
+                public void onCompleted(List<Music> musicList) {
+                    FileModel fileModel = new FileModel(file.getName() , file.getPath() , musicList.size());
+                    DataBaseManager.getInstance(getContext()).insert(fileModel);
+                    SharedPreferencesUtils.setFirst(getContext());
+                }
+            });
+
+        }
+    }
 
     @OnClick(R.id.textview_filelocal_choose)
     public void OnClick_textview_filelocal_choose(){
@@ -129,4 +138,6 @@ public class LocalFileFragment extends Fragment {
         textview_filelocal_bottom.setText(String.format("总共有 " + fileList.size() + " 个文件夹"));
 
     }
+
+
 }
