@@ -18,6 +18,7 @@ import com.githang.statusbar.StatusBarCompat;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -29,7 +30,9 @@ import wdd.musicplayer.eventbus.EB_updataLoaclFileList;
 import wdd.musicplayer.model.FileModel;
 import wdd.musicplayer.model.Music;
 import wdd.musicplayer.ui.adapter.ChooseFileAdapter;
+import wdd.musicplayer.ui.adapter.FileShowAdapter;
 import wdd.musicplayer.utils.FileUtils;
+import wdd.musicplayer.utils.MediaUtils;
 
 /**
  * 已经添加的文件夹展示
@@ -70,12 +73,28 @@ public class LoaclFileShowActivity extends AppCompatActivity {
 
         textview_toolbar_title.setText(file.getName());
 
-//        recycler_choose.setLayoutManager(new LinearLayoutManager(this));
-//        recycler_choose.setAdapter(new ChooseFileAdapter(this , FileUtils.getFilderInfo(path)));
+        recycler_loaclfle.setLayoutManager(new LinearLayoutManager(this));
+        FileShowAdapter fileShowAdapter = new FileShowAdapter(this , getMusicList(file));
+        recycler_loaclfle.setAdapter(fileShowAdapter);
 
     }
 
-
+    private List<Music> getMusicList(File file) {
+        List<Music> musicList = new ArrayList<>();
+        List<Music> allList = MediaUtils.DBInfo(this);
+        File[] files = file.listFiles();
+        for (File checkFile : files){
+            if (FileUtils.checkIsMusic(checkFile.getName())){
+                for (int i =0 ; i < allList.size() ; i++) {
+                    Music baseMusic = allList.get(i);
+                    if (checkFile.getPath().equals(baseMusic.path)){
+                        musicList.add(baseMusic);
+                    }
+                }
+            }
+        }
+        return musicList;
+    }
 
 
 }
