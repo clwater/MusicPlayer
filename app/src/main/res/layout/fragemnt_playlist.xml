@@ -6,9 +6,39 @@
     android:background="@color/baseBackgroundColor"
     >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="playlist"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/recycler_playerlist"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textvie_playerlist_choose"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="@color/item.titile"
+                android:background="@color/item.background"
+                android:text="添加文件夹"
+                />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
 
 </RelativeLayout>

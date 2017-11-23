@@ -28,11 +28,14 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import wdd.musicplayer.R;
+import wdd.musicplayer.db.DataBaseManager;
+import wdd.musicplayer.model.ListModel;
 import wdd.musicplayer.ui.adapter.FragmentAdapter;
 import wdd.musicplayer.ui.fragment.FileFragment;
 import wdd.musicplayer.ui.fragment.PlayerFragment;
 import wdd.musicplayer.ui.fragment.PlayerListFragment;
 import wdd.musicplayer.ui.fragment.SettingFragment;
+import wdd.musicplayer.utils.SharedPreferencesUtils;
 
 /**
  * 应用主页面
@@ -77,6 +80,16 @@ public class MainActivity extends AppCompatActivity {
 
         //设置系统通知栏颜色
         StatusBarCompat.setStatusBarColor(this , Color.parseColor("#3C5F78"));
+
+        initPlayerList();
+    }
+
+    private void initPlayerList() {
+        if (SharedPreferencesUtils.getFirst(this)){
+            ListModel listModel = new ListModel("收藏" , 0);
+            DataBaseManager.getInstance(this).insert(listModel);
+            SharedPreferencesUtils.setFirst(this);
+        }
     }
 
     private void initFragment() {

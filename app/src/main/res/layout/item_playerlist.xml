@@ -15,13 +15,12 @@
         />
 
     <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/imageview_folder"
+        android:id="@+id/imageview_playerlist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        app:srcCompat="@drawable/ic_folder"
         />
 
     <LinearLayout
@@ -29,16 +28,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/imageview_folder"
-        android:layout_toEndOf="@+id/imageview_folder"
-        android:layout_toLeftOf="@+id/imagebutton_fileitem_action"
-        android:layout_toStartOf="@+id/imagebutton_fileitem_action"
+        android:layout_toRightOf="@+id/imageview_playerlist"
+        android:layout_toEndOf="@+id/imageview_playerlist"
+        android:layout_toLeftOf="@+id/imagebutton_playerlist_action"
+        android:layout_toStartOf="@+id/imagebutton_playerlist_action"
         >
 
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:id="@+id/textview_fileitem_name"
+            android:id="@+id/textview_playerlist_name"
             android:text="A little bit longer"
             android:singleLine="true"
             android:textSize="14sp"
@@ -47,7 +46,7 @@
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:id="@+id/textview_fileitem_info"
+            android:id="@+id/textview_playerlist_info"
             android:text="A little bit longer"
             android:singleLine="true"
             android:textSize="12sp"
@@ -59,7 +58,7 @@
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/imagebutton_fileitem_action"
+        android:id="@+id/imagebutton_playerlist_action"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_gravity="center"

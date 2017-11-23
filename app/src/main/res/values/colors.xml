@@ -2,10 +2,11 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#95B4C2</color>
 
     <color name="baseTextColor">#DDF9FF</color>
     <color name="baseBackgroundColor">#3C5F78</color>
+    <color name="baseDialogBackgroundColor">#254760</color>
 
     <color name="tagSelect">#95B4C2</color>
     <color name="tagTextClolor">#3C5F78</color>
@@ -16,6 +17,9 @@
     <color name="item.titile">#DDF9FF</color>
     <color name="item.text">#b6e5f5f9</color>
     <color name="item.driver">#3C5F78</color>
+
+    <color name="dialog.edittexthin">#cb98c2ca</color>
+    <color name="dialog.driver">#3C5F78</color>
 
 
 </resources>

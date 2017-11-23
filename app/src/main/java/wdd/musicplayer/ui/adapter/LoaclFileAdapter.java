@@ -32,7 +32,7 @@ import wdd.musicplayer.utils.FileUtils;
 import wdd.musicplayer.utils.TimeUtils;
 
 /**
- * 数据库歌曲adap
+ * 系统数据库歌曲adapter
  */
 
 public class LoaclFileAdapter extends RecyclerView.Adapter<LoaclFileAdapter.AllFileAdapterHolder> {
