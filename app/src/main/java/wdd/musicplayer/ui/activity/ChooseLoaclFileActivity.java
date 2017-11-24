@@ -111,12 +111,5 @@ public class ChooseLoaclFileActivity extends AppCompatActivity {
                 }
             });
         }
-
-
-
-
-
     }
-
-
 }

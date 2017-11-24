@@ -14,13 +14,14 @@
         android:layout_marginBottom="1px"
         />
 
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/imageview_playerlist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <TextView
+        android:id="@+id/textview_playerlist"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:textSize="16sp"
         />
 
     <LinearLayout
@@ -28,8 +29,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/imageview_playerlist"
-        android:layout_toEndOf="@+id/imageview_playerlist"
+        android:layout_toRightOf="@+id/textview_playerlist"
+        android:layout_toEndOf="@+id/textview_playerlist"
         android:layout_toLeftOf="@+id/imagebutton_playerlist_action"
         android:layout_toStartOf="@+id/imagebutton_playerlist_action"
         >

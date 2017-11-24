@@ -2,6 +2,7 @@ package wdd.musicplayer.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -61,6 +62,16 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Al
         String info = String.format("%s 首歌" , String.valueOf(listModel.number) );
         holder.textview_playerlist_info.setText(info);
 
+        if (listModel.name.equals("收藏")) {
+            holder.textview_playerlist.setBackgroundResource(R.drawable.ic_favorite_yes);
+        }else {
+            String name = listModel.name;
+            name = name.substring(0 , 1);
+            holder.textview_playerlist.setText(name);
+            holder.textview_playerlist.setBackgroundColor(Color.parseColor("#3C5F78"));
+
+        }
+
     }
 
     @Override
@@ -77,6 +88,8 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Al
         TextView textview_playerlist_info;
         @BindView(R.id.imagebutton_playerlist_action)
         ImageView imagebutton_playerlist_action;
+        @BindView(R.id.textview_playerlist)
+        TextView textview_playerlist;
 
         AllFileAdapterHolder(final View view) {
             super(view);
