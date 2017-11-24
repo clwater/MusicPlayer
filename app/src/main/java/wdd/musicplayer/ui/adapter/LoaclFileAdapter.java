@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,7 @@ import wdd.musicplayer.model.FileModel;
 import wdd.musicplayer.model.Music;
 import wdd.musicplayer.ui.activity.LoaclFileShowActivity;
 import wdd.musicplayer.utils.FileUtils;
+import wdd.musicplayer.utils.MediaUtils;
 import wdd.musicplayer.utils.TimeUtils;
 
 /**
@@ -120,6 +122,7 @@ public class LoaclFileAdapter extends RecyclerView.Adapter<LoaclFileAdapter.AllF
 
                 switch (item.getItemId()){
                     case R.id.floder_insert:
+                        insertAll(postion);
                         break;
                     case R.id.floder_create:
                         break;
@@ -142,6 +145,30 @@ public class LoaclFileAdapter extends RecyclerView.Adapter<LoaclFileAdapter.AllF
                 return false;
             }
         });
+    }
+
+    private void insertAll(int postion) {
+        FileModel fileModel = list.get(postion);
+        List<Music> musicList = getMusicList(new File(fileModel.path));
+
+
+    }
+
+    private List<Music> getMusicList(File file) {
+        List<Music> musicList = new ArrayList<>();
+        List<Music> allList = MediaUtils.DBInfo(context);
+        File[] files = file.listFiles();
+        for (File checkFile : files){
+            if (FileUtils.checkIsMusic(checkFile.getName())){
+                for (int i =0 ; i < allList.size() ; i++) {
+                    Music baseMusic = allList.get(i);
+                    if (checkFile.getPath().equals(baseMusic.path)){
+                        musicList.add(baseMusic);
+                    }
+                }
+            }
+        }
+        return musicList;
     }
 
 }
