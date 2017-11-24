@@ -23,6 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import wdd.musicplayer.R;
 import wdd.musicplayer.db.DataBaseManager;
+import wdd.musicplayer.eventbus.EB_RenamePlayerListName;
+import wdd.musicplayer.eventbus.EB_UpdataPlayerList;
 import wdd.musicplayer.model.ListModel;
 import wdd.musicplayer.ui.adapter.PlayerListAdapter;
 
@@ -53,11 +57,17 @@ public class PlayerListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragemnt_playlist, container, false);
         ButterKnife.bind(this, view);
-//        EventBus.getDefault().register(PlayerListFragment.this);
 
         init();
 
         return view;
+
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(PlayerListFragment.this);
 
     }
 
@@ -76,14 +86,19 @@ public class PlayerListFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-//        EventBus.getDefault().unregister(PlayerListFragment.this);
+        EventBus.getDefault().unregister(PlayerListFragment.this);
     }
 
     @OnClick(R.id.textvie_playerlist_choose)
     public void OnClick_textvie_playerlist_choose() {
+        AlertDialog dialog = createNewListDialog();
+        //更改dialog大小
+        changeDialogSize(dialog);
 
+    }
 
-
+    //创建一个新增播放列表的dialog
+    private AlertDialog createNewListDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext() , R.style.MusicPlayer_Dialog);
         builder.setTitle("创建播放列表");
         LinearLayout loginDialog = (LinearLayout) getLayoutInflater().inflate(R.layout.dialog_add_playerlist, null);
@@ -103,10 +118,42 @@ public class PlayerListFragment extends Fragment {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+        return dialog;
+    }
 
-        //更改dialog大小
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void EB_EB_RenamePlayerListName(EB_RenamePlayerListName e){
+        AlertDialog dialog = updataNewListDialog(e.listModel);
         changeDialogSize(dialog);
+    }
 
+    private AlertDialog updataNewListDialog(final ListModel listModel) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext() , R.style.MusicPlayer_Dialog);
+        builder.setTitle("编辑播放列表");
+        LinearLayout loginDialog = (LinearLayout) getLayoutInflater().inflate(R.layout.dialog_add_playerlist, null);
+        builder.setView(loginDialog);
+        builder.setCancelable(true);
+
+        final EditText edittext_playerlist  =loginDialog.findViewById(R.id.edittext_playerlist);
+        edittext_playerlist.setText(listModel.name);
+        builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String name = edittext_playerlist.getText().toString();
+                listModel.name = name;
+                updateNewList(listModel);
+            }
+        });
+        builder.setNegativeButton("取消", null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        return dialog;
+    }
+
+    private void updateNewList(ListModel listModel) {
+        DataBaseManager.getInstance(getContext()).update(listModel);
+        updataList();
     }
 
     private void createNewList(String name) {
@@ -151,5 +198,9 @@ public class PlayerListFragment extends Fragment {
         dialog.getWindow().setAttributes(lp);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void EB_EB_UpdataPlayerList(EB_UpdataPlayerList e){
+        updataList();
+    }
 
 }

@@ -20,6 +20,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import wdd.musicplayer.R;
 import wdd.musicplayer.db.DataBaseManager;
+import wdd.musicplayer.eventbus.EB_RenamePlayerListName;
+import wdd.musicplayer.eventbus.EB_UpdataPlayerList;
 import wdd.musicplayer.eventbus.EB_updataLoaclFileList;
 import wdd.musicplayer.model.FileModel;
 import wdd.musicplayer.model.ListModel;
@@ -119,8 +121,11 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Al
                     case R.id.playerlist_player:
                         break;
                     case R.id.playerlist_rename:
+                        EventBus.getDefault().post(new EB_RenamePlayerListName(listModel));
                         break;
                     case R.id.playerlist_del:
+                        DataBaseManager.getInstance(context).delete(listModel);
+                        EventBus.getDefault().post(new EB_UpdataPlayerList());
                         break;
 
                 }
