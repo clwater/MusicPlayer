@@ -119,9 +119,6 @@ public class DialogPlayerListAdapter extends RecyclerView.Adapter<DialogPlayerLi
     }
 
     private boolean checkMusinInList(ListModel listModel, Music music) {
-        List<ListItemModel> _listItemModels = DataBaseManager.getInstance(context).queryAll(ListItemModel.class);
-
-
         List<ListItemModel> listItemModels = DataBaseManager.getInstance(context).queryByWhere(ListItemModel.class,
                 "path" , new String[]{music.path});
         for (int i = 0 ; i < listItemModels.size() ; i++){
