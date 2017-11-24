@@ -74,7 +74,7 @@ public class LoaclFileShowActivity extends AppCompatActivity {
         textview_toolbar_title.setText(file.getName());
 
         recycler_loaclfle.setLayoutManager(new LinearLayoutManager(this));
-        FileShowAdapter fileShowAdapter = new FileShowAdapter(this , getMusicList(file));
+        FileShowAdapter fileShowAdapter = new FileShowAdapter(this , getMusicList(file) ,LoaclFileShowActivity.this);
         recycler_loaclfle.setAdapter(fileShowAdapter);
 
     }

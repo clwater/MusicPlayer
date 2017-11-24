@@ -101,11 +101,11 @@ public class PlayerListFragment extends Fragment {
     private AlertDialog createNewListDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext() , R.style.MusicPlayer_Dialog);
         builder.setTitle("创建播放列表");
-        LinearLayout loginDialog = (LinearLayout) getLayoutInflater().inflate(R.layout.dialog_add_playerlist, null);
-        builder.setView(loginDialog);
+        LinearLayout linearLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.dialog_add_playerlist, null);
+        builder.setView(linearLayout);
         builder.setCancelable(true);
 
-        final EditText edittext_playerlist  =loginDialog.findViewById(R.id.edittext_playerlist);
+        final EditText edittext_playerlist  =linearLayout.findViewById(R.id.edittext_playerlist);
 
         builder.setPositiveButton("创建", new DialogInterface.OnClickListener() {
             @Override
@@ -130,11 +130,11 @@ public class PlayerListFragment extends Fragment {
     private AlertDialog updataNewListDialog(final ListModel listModel) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext() , R.style.MusicPlayer_Dialog);
         builder.setTitle("编辑播放列表");
-        LinearLayout loginDialog = (LinearLayout) getLayoutInflater().inflate(R.layout.dialog_add_playerlist, null);
-        builder.setView(loginDialog);
+        LinearLayout linearLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.dialog_add_playerlist, null);
+        builder.setView(linearLayout);
         builder.setCancelable(true);
 
-        final EditText edittext_playerlist  =loginDialog.findViewById(R.id.edittext_playerlist);
+        final EditText edittext_playerlist  =linearLayout.findViewById(R.id.edittext_playerlist);
         edittext_playerlist.setText(listModel.name);
         builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
             @Override

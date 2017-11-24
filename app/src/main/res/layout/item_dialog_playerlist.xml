@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="54dp"
+    android:background="@color/item.background"
+    >
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackground"
+        android:layout_marginBottom="1px"
+        />
+
+    <TextView
+        android:id="@+id/textview_dialog_playerlist"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:textSize="16sp"
+        />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/textview_dialog_playerlist"
+        android:layout_toEndOf="@+id/textview_dialog_playerlist"
+        >
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/textview_dialog_playerlist_name"
+            android:text="A little bit longer"
+            android:singleLine="true"
+            android:textSize="14sp"
+            android:textColor="@color/item.titile"
+            />
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/textview_dialog_playerlist_info"
+            android:text="A little bit longer"
+            android:singleLine="true"
+            android:textSize="12sp"
+            android:textColor="@color/item.text"
+            />
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/item.driver"
+        android:layout_alignParentBottom="true"
+        />
+</RelativeLayout>

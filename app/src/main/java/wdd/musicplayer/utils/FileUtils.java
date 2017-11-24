@@ -141,6 +141,18 @@ public class FileUtils {
         }
     }
 
+    public static String showLongFileSzie(int length) {
+        if (length >= 1048576) {
+            return (length / 1048576) + "MB";
+        } else if (length >= 1024) {
+            return (length / 1024) + "KB";
+        } else if (length < 1024) {
+            return length + "B";
+        } else {
+            return "0KB";
+        }
+    }
+
     /**
      * @param path
      * 更新系统扫描指定文件

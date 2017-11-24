@@ -29,6 +29,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import wdd.musicplayer.R;
 import wdd.musicplayer.db.DataBaseManager;
+import wdd.musicplayer.model.ListItemModel;
 import wdd.musicplayer.model.ListModel;
 import wdd.musicplayer.ui.adapter.FragmentAdapter;
 import wdd.musicplayer.ui.fragment.FileFragment;

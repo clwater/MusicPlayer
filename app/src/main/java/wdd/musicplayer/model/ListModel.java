@@ -9,7 +9,7 @@ import com.litesuits.orm.db.enums.AssignType;
  * Created by gengzhibo on 2017/11/23.
  */
 
-@Table("ListItemModel")
+@Table("ListModel")
 public class ListModel {
 
     //主键，自增

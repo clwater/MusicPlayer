@@ -23,12 +23,15 @@ public class ListItemModel {
     @NotNull
     public String artist;
     @NotNull
-    public String parents;
+    public String parent;
+    @NotNull
+    public String path;
 
-    public ListItemModel(String name, String time, String artist, String parents) {
+    public ListItemModel(String name, String time, String artist, String parent , String path) {
         this.name = name;
         this.time = time;
         this.artist = artist;
-        this.parents = parents;
+        this.parent = parent;
+        this.path = path;
     }
 }

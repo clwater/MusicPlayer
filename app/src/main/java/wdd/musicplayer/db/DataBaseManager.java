@@ -27,8 +27,7 @@ public class DataBaseManager {
 
     /**
      * @param context
-     * @return
-     * 保证单例对象唯一
+     * @return 保证单例对象唯一
      */
     public static DataBaseManager getInstance(Context context) {
         context = context.getApplicationContext();
@@ -83,5 +82,9 @@ public class DataBaseManager {
      */
     public <T> T query(long id, Class<T> clazz) {
         return liteOrm.queryById(id, clazz);
+    }
+
+    public <T> List<T> queryWithsql(Class<T> cla, String sql) {
+        return  liteOrm.query(new QueryBuilder(cla).where(sql));
     }
 }
