@@ -49,9 +49,7 @@ public class FileUtils {
             if (checkIsMusic(filename)){
                 musicIndex++;
                 haveMusic = true;
-            }
 
-            if (haveMusic){
                 final int finalMusicNumber = musicNumber;
                 final int finalMusicIndex = musicIndex;
                 updateFile(context, childFile.getPath(), new UpdateFileBack() {
@@ -64,12 +62,13 @@ public class FileUtils {
                                 list.add(music);
                             }
                         }
-                        if (finalMusicIndex >= finalMusicNumber){
+                        if (finalMusicIndex == finalMusicNumber){
                             findMusicInFileBack.onCompleted(list);
                         }
                     }
                 });
             }
+
         }
         if (!haveMusic) {
             findMusicInFileBack.onCompleted(list);
