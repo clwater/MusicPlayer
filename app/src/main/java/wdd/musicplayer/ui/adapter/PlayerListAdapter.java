@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,7 +23,7 @@ import butterknife.ButterKnife;
 import wdd.musicplayer.R;
 import wdd.musicplayer.db.DataBaseManager;
 import wdd.musicplayer.eventbus.EB_RenamePlayerListName;
-import wdd.musicplayer.eventbus.EB_UpdataPlayerList;
+import wdd.musicplayer.eventbus.EB_UpdataList;
 import wdd.musicplayer.model.ListModel;
 import wdd.musicplayer.ui.activity.PlayerListActivity;
 
@@ -94,7 +95,9 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Al
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context , PlayerListActivity.class);
-                    intent.putExtra("name" , list.get(getAdapterPosition()).name);
+//                    intent.putExtra("name" , list.get(getAdapterPosition()).name);
+                    intent.putExtra("ListModel" , list.get(getAdapterPosition()));
+
                     context.startActivity(intent);
                 }
             });
@@ -136,7 +139,7 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Al
                         break;
                     case R.id.playerlist_del:
                         DataBaseManager.getInstance(context).delete(listModel);
-                        EventBus.getDefault().post(new EB_UpdataPlayerList());
+                        EventBus.getDefault().post(new EB_UpdataList(EB_UpdataList.UPDATAPLAYERLIST));
                         break;
 
                 }

@@ -21,12 +21,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import wdd.musicplayer.R;
 import wdd.musicplayer.db.DataBaseManager;
-import wdd.musicplayer.eventbus.EB_UpdataPlayerList;
-import wdd.musicplayer.model.FileModel;
+import wdd.musicplayer.eventbus.EB_UpdataList;
 import wdd.musicplayer.model.ListItemModel;
 import wdd.musicplayer.model.ListModel;
 import wdd.musicplayer.model.Music;
-import wdd.musicplayer.utils.FileUtils;
+import wdd.musicplayer.utils.TimeUtils;
 
 /**
  * Dialog播放列表adapter
@@ -109,9 +108,9 @@ public class DialogPlayerListAdapter extends RecyclerView.Adapter<DialogPlayerLi
         if (!check){
             listModel.number = listModel.number + 1;
             DataBaseManager.getInstance(context).update(listModel);
-            ListItemModel listItemModel = new ListItemModel(music.name , FileUtils.showLongFileSzie(music.longTime)  , music.artist , listModel.name , music.path );
+            ListItemModel listItemModel = new ListItemModel(music.name , TimeUtils.tranTime(music.longTime)  , music.artist , listModel.name , music.path );
             DataBaseManager.getInstance(context).insert(listItemModel);
-            EventBus.getDefault().post(new EB_UpdataPlayerList());
+            EventBus.getDefault().post(new EB_UpdataList(EB_UpdataList.UPDATAPLAYERLIST));
             FileShowAdapter.closeDialog();
         }else {
             Toast.makeText(context , "当前歌曲已经在本列表中", Toast.LENGTH_SHORT).show();

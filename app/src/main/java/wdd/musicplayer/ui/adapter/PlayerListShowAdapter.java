@@ -18,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import wdd.musicplayer.R;
 import wdd.musicplayer.db.DataBaseManager;
+import wdd.musicplayer.eventbus.EB_UpdataList;
 import wdd.musicplayer.model.ListItemModel;
 import wdd.musicplayer.model.ListModel;
 import wdd.musicplayer.model.Music;
@@ -38,12 +41,14 @@ public class PlayerListShowAdapter extends RecyclerView.Adapter<PlayerListShowAd
     private final LayoutInflater layoutInflater;
     private final Context context;
     private List<ListItemModel> list = new ArrayList<>();
+    private ListModel listModel;
 
     //构造函数 设置相关变量
-    public PlayerListShowAdapter(Context context , List<ListItemModel> lis) {
+    public PlayerListShowAdapter(Context context , List<ListItemModel> list , ListModel listModel) {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         this.list = list;
+        this.listModel = listModel;
     }
 
     //初始化设置资源文件等信息
@@ -58,8 +63,10 @@ public class PlayerListShowAdapter extends RecyclerView.Adapter<PlayerListShowAd
         //获取当前对象
         ListItemModel listItemModel = list.get(position);
         holder.textview_playerlistshow_name.setText(listItemModel.name);
-        String info = String.format("%s | %s" , listItemModel.artist , listItemModel.time);
+        String info = String.format("%s | %s" , listItemModel.time , listItemModel.artist);
         holder.textview_playerlistshow_info.setText(info);
+        holder.textview_playerlistshow_index.setText(String.valueOf(position + 1
+        ));
     }
 
     @Override
@@ -103,20 +110,28 @@ public class PlayerListShowAdapter extends RecyclerView.Adapter<PlayerListShowAd
         // 这里的view代表popupMenu需要依附的view
         PopupMenu popupMenu = new PopupMenu(context, view);
         // 获取布局文件
-        popupMenu.getMenuInflater().inflate(R.menu.flodershow_menu, popupMenu.getMenu());
+        popupMenu.getMenuInflater().inflate(R.menu.playerlistshow_menu, popupMenu.getMenu());
         popupMenu.show();
 
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                ListItemModel listItemModel = list.get(postion);
-                if (item.getItemId() == R.id.flodershow_insert){
-//                    showChooseListDiaog(music);
+                if (item.getItemId() == R.id.playerlistshow_del){
+                    deleteItemFromPlayerlist(postion);
                 }
 
                 return false;
             }
         });
+    }
+
+    private void deleteItemFromPlayerlist(int postion) {
+        ListItemModel listItemModel = list.get(postion);
+        DataBaseManager.getInstance(context).delete(listItemModel);
+        listModel.number = listModel.number - 1;
+        DataBaseManager.getInstance(context).update(listModel);
+        EventBus.getDefault().post(new EB_UpdataList(EB_UpdataList.UPDATAPLAYERLISTSHOW));
+        EventBus.getDefault().post(new EB_UpdataList(EB_UpdataList.UPDATAPLAYERLIST));
     }
 
 }

@@ -20,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import wdd.musicplayer.R;
 import wdd.musicplayer.db.DataBaseManager;
-import wdd.musicplayer.eventbus.EB_UpdataLoaclFileList;
+import wdd.musicplayer.eventbus.EB_UpdataList;
 import wdd.musicplayer.model.FileModel;
 import wdd.musicplayer.model.Music;
 import wdd.musicplayer.ui.activity.LoaclFileShowActivity;
@@ -121,13 +121,13 @@ public class LoaclFileAdapter extends RecyclerView.Adapter<LoaclFileAdapter.AllF
                             public void onCompleted(List<Music> musicList) {
                                 checkFile.number = musicList.size();
                                 DataBaseManager.getInstance(context).update(checkFile);
-                                EventBus.getDefault().post(new EB_UpdataLoaclFileList());
+                                EventBus.getDefault().post(new EB_UpdataList(EB_UpdataList.UPDATALOACLFILELIST));
                             }
                         });
                         break;
                     case R.id.floder_del:
                         DataBaseManager.getInstance(context).delete(fileModel);
-                        EventBus.getDefault().post(new EB_UpdataLoaclFileList());
+                        EventBus.getDefault().post(new EB_UpdataList(EB_UpdataList.UPDATALOACLFILELIST));
                         break;
                 }
                 return false;

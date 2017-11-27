@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import wdd.musicplayer.R;
 import wdd.musicplayer.db.DataBaseManager;
-import wdd.musicplayer.eventbus.EB_UpdataLoaclFileList;
+import wdd.musicplayer.eventbus.EB_UpdataList;
 import wdd.musicplayer.model.FileModel;
 import wdd.musicplayer.model.Music;
 import wdd.musicplayer.ui.activity.ChooseLoaclFileActivity;
@@ -127,11 +127,13 @@ public class LocalFileFragment extends Fragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void OnEvent_EB_updataLoaclFileList(EB_UpdataLoaclFileList e){
-        fileList = DataBaseManager.getInstance(getContext()).queryAll(FileModel.class);
-        localFileAdapter = new LoaclFileAdapter(getContext() , fileList);
-        recycler_fileall_list.setAdapter(localFileAdapter);
-        textview_filelocal_bottom.setText(String.format("总共有 " + fileList.size() + " 个文件夹"));
+    public void OnEvent_EB_updataLoaclFileList(EB_UpdataList e){
+        if (e.list.equals(EB_UpdataList.UPDATALOACLFILELIST)) {
+            fileList = DataBaseManager.getInstance(getContext()).queryAll(FileModel.class);
+            localFileAdapter = new LoaclFileAdapter(getContext(), fileList);
+            recycler_fileall_list.setAdapter(localFileAdapter);
+            textview_filelocal_bottom.setText(String.format("总共有 " + fileList.size() + " 个文件夹"));
+        }
 
     }
 

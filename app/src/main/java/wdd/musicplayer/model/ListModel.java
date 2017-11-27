@@ -5,12 +5,14 @@ import com.litesuits.orm.db.annotation.PrimaryKey;
 import com.litesuits.orm.db.annotation.Table;
 import com.litesuits.orm.db.enums.AssignType;
 
+import java.io.Serializable;
+
 /**
  * Created by gengzhibo on 2017/11/23.
  */
 
 @Table("ListModel")
-public class ListModel {
+public class ListModel implements Serializable {
 
     //主键，自增
     @PrimaryKey(AssignType.AUTO_INCREMENT)

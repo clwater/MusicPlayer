@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import wdd.musicplayer.R;
 import wdd.musicplayer.db.DataBaseManager;
-import wdd.musicplayer.eventbus.EB_UpdataLoaclFileList;
+import wdd.musicplayer.eventbus.EB_UpdataList;
 import wdd.musicplayer.model.FileModel;
 import wdd.musicplayer.model.Music;
 import wdd.musicplayer.ui.adapter.ChooseFileAdapter;
@@ -99,7 +99,7 @@ public class ChooseLoaclFileActivity extends AppCompatActivity {
                 public void onCompleted(List<Music> musicList) {
                     FileModel fileModel = new FileModel(file.getName() , file.getPath() , musicList.size());
                         DataBaseManager.getInstance(context).insert(fileModel);
-                        EventBus.getDefault().post(new EB_UpdataLoaclFileList());
+                        EventBus.getDefault().post(new EB_UpdataList(EB_UpdataList.UPDATALOACLFILELIST));
                 }
             });
         }

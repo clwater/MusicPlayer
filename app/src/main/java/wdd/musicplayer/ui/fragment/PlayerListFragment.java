@@ -36,7 +36,7 @@ import butterknife.OnClick;
 import wdd.musicplayer.R;
 import wdd.musicplayer.db.DataBaseManager;
 import wdd.musicplayer.eventbus.EB_RenamePlayerListName;
-import wdd.musicplayer.eventbus.EB_UpdataPlayerList;
+import wdd.musicplayer.eventbus.EB_UpdataList;
 import wdd.musicplayer.model.ListModel;
 import wdd.musicplayer.ui.adapter.PlayerListAdapter;
 
@@ -199,8 +199,10 @@ public class PlayerListFragment extends Fragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void EB_EB_UpdataPlayerList(EB_UpdataPlayerList e){
-        updataList();
+    public void EB_EB_UpdataPlayerList(EB_UpdataList e){
+        if (e.list.equals(EB_UpdataList.UPDATAPLAYERLIST)) {
+            updataList();
+        }
     }
 
 }
