@@ -73,7 +73,6 @@ public class PlayerListActivity extends AppCompatActivity{
                 "parent" , new String[]{listModel.name});
         PlayerListShowAdapter playerListShowAdapter = new PlayerListShowAdapter(this , listItemModels , listModel);
         recycler_playerlist.setAdapter(playerListShowAdapter);
-
         textview_playerlist_bottom.setText(String.format("总用有 %s 首歌" , listItemModels.size()));
     }
 
