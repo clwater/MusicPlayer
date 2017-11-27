@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,24 +13,18 @@ import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.OnItemClick;
 import wdd.musicplayer.R;
 import wdd.musicplayer.db.DataBaseManager;
-import wdd.musicplayer.eventbus.EB_PlayerMusic;
-import wdd.musicplayer.eventbus.EB_updataLoaclFileList;
+import wdd.musicplayer.eventbus.EB_UpdataLoaclFileList;
 import wdd.musicplayer.model.FileModel;
 import wdd.musicplayer.model.Music;
 import wdd.musicplayer.ui.activity.LoaclFileShowActivity;
 import wdd.musicplayer.utils.FileUtils;
-import wdd.musicplayer.utils.MediaUtils;
-import wdd.musicplayer.utils.TimeUtils;
 
 /**
  * 系统数据库歌曲adapter
@@ -121,11 +114,6 @@ public class LoaclFileAdapter extends RecyclerView.Adapter<LoaclFileAdapter.AllF
                 FileModel fileModel = list.get(postion);
 
                 switch (item.getItemId()){
-                    case R.id.floder_insert:
-                        insertAll(postion);
-                        break;
-                    case R.id.floder_create:
-                        break;
                     case R.id.floder_refresh:
                         final FileModel checkFile = DataBaseManager.getInstance(context).query(fileModel.id , FileModel.class);
                         FileUtils.findMusicInFile(context , checkFile.path , new FileUtils.FindMusicInFileBack() {
@@ -133,42 +121,18 @@ public class LoaclFileAdapter extends RecyclerView.Adapter<LoaclFileAdapter.AllF
                             public void onCompleted(List<Music> musicList) {
                                 checkFile.number = musicList.size();
                                 DataBaseManager.getInstance(context).update(checkFile);
-                                EventBus.getDefault().post(new EB_updataLoaclFileList());
+                                EventBus.getDefault().post(new EB_UpdataLoaclFileList());
                             }
                         });
                         break;
                     case R.id.floder_del:
                         DataBaseManager.getInstance(context).delete(fileModel);
-                        EventBus.getDefault().post(new EB_updataLoaclFileList());
+                        EventBus.getDefault().post(new EB_UpdataLoaclFileList());
                         break;
                 }
                 return false;
             }
         });
-    }
-
-    private void insertAll(int postion) {
-        FileModel fileModel = list.get(postion);
-        List<Music> musicList = getMusicList(new File(fileModel.path));
-
-
-    }
-
-    private List<Music> getMusicList(File file) {
-        List<Music> musicList = new ArrayList<>();
-        List<Music> allList = MediaUtils.DBInfo(context);
-        File[] files = file.listFiles();
-        for (File checkFile : files){
-            if (FileUtils.checkIsMusic(checkFile.getName())){
-                for (int i =0 ; i < allList.size() ; i++) {
-                    Music baseMusic = allList.get(i);
-                    if (checkFile.getPath().equals(baseMusic.path)){
-                        musicList.add(baseMusic);
-                    }
-                }
-            }
-        }
-        return musicList;
     }
 
 }

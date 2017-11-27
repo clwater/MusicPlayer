@@ -3,7 +3,7 @@
     >
     <item
         android:id="@+id/playerlist_player"
-        android:title="理解播放"/>
+        android:title="立即播放"/>
 
     <item
         android:id="@+id/playerlist_rename"

@@ -6,11 +6,8 @@ import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -28,11 +25,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import wdd.musicplayer.R;
 import wdd.musicplayer.db.DataBaseManager;
-import wdd.musicplayer.eventbus.EB_updataLoaclFileList;
+import wdd.musicplayer.eventbus.EB_UpdataLoaclFileList;
 import wdd.musicplayer.model.FileModel;
 import wdd.musicplayer.model.Music;
 import wdd.musicplayer.ui.activity.ChooseLoaclFileActivity;
-import wdd.musicplayer.ui.activity.MainActivity;
 import wdd.musicplayer.ui.adapter.LoaclFileAdapter;
 import wdd.musicplayer.utils.FileUtils;
 import wdd.musicplayer.utils.SharedPreferencesUtils;
@@ -131,7 +127,7 @@ public class LocalFileFragment extends Fragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void OnEvent_EB_updataLoaclFileList(EB_updataLoaclFileList e){
+    public void OnEvent_EB_updataLoaclFileList(EB_UpdataLoaclFileList e){
         fileList = DataBaseManager.getInstance(getContext()).queryAll(FileModel.class);
         localFileAdapter = new LoaclFileAdapter(getContext() , fileList);
         recycler_fileall_list.setAdapter(localFileAdapter);

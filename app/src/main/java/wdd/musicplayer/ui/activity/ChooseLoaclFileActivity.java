@@ -9,35 +9,27 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.githang.statusbar.StatusBarCompat;
-import com.litesuits.orm.db.utils.FieldUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import wdd.musicplayer.R;
 import wdd.musicplayer.db.DataBaseManager;
-import wdd.musicplayer.eventbus.EB_updataLoaclFileList;
+import wdd.musicplayer.eventbus.EB_UpdataLoaclFileList;
 import wdd.musicplayer.model.FileModel;
 import wdd.musicplayer.model.Music;
 import wdd.musicplayer.ui.adapter.ChooseFileAdapter;
 import wdd.musicplayer.utils.FileUtils;
-
-import static wdd.musicplayer.utils.FileUtils.floderChild;
-import static wdd.musicplayer.utils.FileUtils.getFilderInfo;
 
 /**
  * Created by gengzhibo on 2017/11/16.
@@ -107,7 +99,7 @@ public class ChooseLoaclFileActivity extends AppCompatActivity {
                 public void onCompleted(List<Music> musicList) {
                     FileModel fileModel = new FileModel(file.getName() , file.getPath() , musicList.size());
                         DataBaseManager.getInstance(context).insert(fileModel);
-                        EventBus.getDefault().post(new EB_updataLoaclFileList());
+                        EventBus.getDefault().post(new EB_UpdataLoaclFileList());
                 }
             });
         }

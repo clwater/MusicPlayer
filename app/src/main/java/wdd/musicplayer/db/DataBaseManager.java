@@ -60,7 +60,7 @@ public class DataBaseManager {
      */
     @SuppressWarnings("unchecked")
     public <T> List<T> queryByWhere(Class<T> cla, String field, String[] value) {
-        return liteOrm.query(new QueryBuilder(cla).where(field + "=?", value));
+        return liteOrm.query(new QueryBuilder(cla).where(field + "=?",  value));
     }
 
     /**

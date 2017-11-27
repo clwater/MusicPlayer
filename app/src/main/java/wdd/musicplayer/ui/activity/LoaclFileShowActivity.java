@@ -4,18 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.githang.statusbar.StatusBarCompat;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -23,13 +18,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import wdd.musicplayer.R;
-import wdd.musicplayer.db.DataBaseManager;
-import wdd.musicplayer.eventbus.EB_updataLoaclFileList;
-import wdd.musicplayer.model.FileModel;
 import wdd.musicplayer.model.Music;
-import wdd.musicplayer.ui.adapter.ChooseFileAdapter;
 import wdd.musicplayer.ui.adapter.FileShowAdapter;
 import wdd.musicplayer.utils.FileUtils;
 import wdd.musicplayer.utils.MediaUtils;

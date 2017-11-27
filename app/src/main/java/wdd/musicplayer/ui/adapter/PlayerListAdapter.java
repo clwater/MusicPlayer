@@ -23,12 +23,8 @@ import wdd.musicplayer.R;
 import wdd.musicplayer.db.DataBaseManager;
 import wdd.musicplayer.eventbus.EB_RenamePlayerListName;
 import wdd.musicplayer.eventbus.EB_UpdataPlayerList;
-import wdd.musicplayer.eventbus.EB_updataLoaclFileList;
-import wdd.musicplayer.model.FileModel;
 import wdd.musicplayer.model.ListModel;
-import wdd.musicplayer.model.Music;
-import wdd.musicplayer.ui.activity.LoaclFileShowActivity;
-import wdd.musicplayer.utils.FileUtils;
+import wdd.musicplayer.ui.activity.PlayerListActivity;
 
 /**
  * 播放列表adapter
@@ -97,7 +93,9 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Al
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent intent = new Intent(context , PlayerListActivity.class);
+                    intent.putExtra("name" , list.get(getAdapterPosition()).name);
+                    context.startActivity(intent);
                 }
             });
 
