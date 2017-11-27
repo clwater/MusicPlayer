@@ -22,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import wdd.musicplayer.R;
 import wdd.musicplayer.db.DataBaseManager;
+import wdd.musicplayer.eventbus.EB_PlayerList;
 import wdd.musicplayer.eventbus.EB_RenamePlayerListName;
 import wdd.musicplayer.eventbus.EB_UpdataList;
 import wdd.musicplayer.model.ListModel;

@@ -27,6 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import wdd.musicplayer.R;
 import wdd.musicplayer.db.DataBaseManager;
+import wdd.musicplayer.eventbus.EB_PlayerList;
 import wdd.musicplayer.eventbus.EB_PlayerMusic;
 import wdd.musicplayer.eventbus.EB_UpdataList;
 import wdd.musicplayer.model.ListItemModel;
@@ -260,6 +261,13 @@ public class PlayerFragment extends Fragment {
     public void onClick_button_player_favorite(){
         updatePlayFavorite();
         EventBus.getDefault().post(new EB_UpdataList(EB_UpdataList.UPDATAPLAYERLIST));
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void EventBus_EB_PlayerList(EB_PlayerList e){
+        if (e.viewPart.equals(EB_PlayerList.FAVORITE)){
+            changePlayFavorite();
+        }
     }
 
     @Override

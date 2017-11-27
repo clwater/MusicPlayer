@@ -27,6 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import wdd.musicplayer.R;
 import wdd.musicplayer.db.DataBaseManager;
+import wdd.musicplayer.eventbus.EB_PlayerList;
 import wdd.musicplayer.eventbus.EB_UpdataList;
 import wdd.musicplayer.model.ListItemModel;
 import wdd.musicplayer.model.ListModel;
@@ -118,6 +119,7 @@ public class PlayerListShowAdapter extends RecyclerView.Adapter<PlayerListShowAd
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.playerlistshow_del){
                     deleteItemFromPlayerlist(postion);
+                    EventBus.getDefault().post(new EB_PlayerList(EB_PlayerList.FAVORITE));
                 }
 
                 return false;
