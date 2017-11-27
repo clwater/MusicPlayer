@@ -13,7 +13,7 @@ public class PlayModel {
 
     //构造函数 初始化模式为LOOP
     public PlayModel() {
-        index = SINGLE;
+        index = LOOP;
     }
 
     //更换模式,在四种模式中循环更换

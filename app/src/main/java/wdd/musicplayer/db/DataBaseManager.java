@@ -5,7 +5,10 @@ import android.content.Context;
 import com.litesuits.orm.LiteOrm;
 import com.litesuits.orm.db.assit.QueryBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import wdd.musicplayer.model.ListItemModel;
 
 /**
  * Created by gengzhibo on 2017/11/15.
@@ -84,7 +87,15 @@ public class DataBaseManager {
         return liteOrm.queryById(id, clazz);
     }
 
-    public <T> List<T> queryWithsql(Class<T> cla, String sql) {
-        return  liteOrm.query(new QueryBuilder(cla).where(sql));
+
+    public ArrayList<ListItemModel> queryMusinInFavorite(String path){
+        return liteOrm.query(new QueryBuilder<ListItemModel>(ListItemModel.class)
+                .whereEquals("path", path)
+                .whereAppendAnd()
+                .whereEquals("parent", "收藏"));
+    }
+
+    public boolean isQueryMusinInFavorite(String path){
+        return queryMusinInFavorite(path).size() > 0;
     }
 }

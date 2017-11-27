@@ -10,6 +10,6 @@ public class Music {
     public String name , artist , path , filename ;
     public Long ALBUM_ID , id ;
     public int longTime;
-    public boolean favorite = true , isPlaying = true;
+    public boolean favorite = false , isPlaying = false;
 //    public int mode = 0;
 }

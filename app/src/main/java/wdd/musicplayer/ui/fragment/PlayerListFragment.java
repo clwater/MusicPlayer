@@ -37,6 +37,7 @@ import wdd.musicplayer.R;
 import wdd.musicplayer.db.DataBaseManager;
 import wdd.musicplayer.eventbus.EB_RenamePlayerListName;
 import wdd.musicplayer.eventbus.EB_UpdataList;
+import wdd.musicplayer.model.ListItemModel;
 import wdd.musicplayer.model.ListModel;
 import wdd.musicplayer.ui.adapter.PlayerListAdapter;
 
@@ -201,7 +202,19 @@ public class PlayerListFragment extends Fragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void EB_EB_UpdataPlayerList(EB_UpdataList e){
         if (e.list.equals(EB_UpdataList.UPDATAPLAYERLIST)) {
+            updataListInfo();
             updataList();
+        }
+    }
+
+    private void updataListInfo() {
+        listModels = DataBaseManager.getInstance(getContext()).queryAll(ListModel.class);
+        for (int i = 0 ; i < listModels.size() ; i++ ){
+            ListModel listModel = listModels.get(i);
+            List<ListItemModel> listItemModels = DataBaseManager.getInstance(getContext()).queryByWhere(ListItemModel.class,
+                    "parent" , new String[]{listModel.name});
+            listModel.number = listItemModels.size();
+            DataBaseManager.getInstance(getContext()).update(listModel);
         }
     }
 

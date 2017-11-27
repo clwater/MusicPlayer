@@ -106,8 +106,8 @@ public class DialogPlayerListAdapter extends RecyclerView.Adapter<DialogPlayerLi
         ListModel listModel = list.get(postion);
         boolean check = checkMusinInList(listModel , music);
         if (!check){
-            listModel.number = listModel.number + 1;
-            DataBaseManager.getInstance(context).update(listModel);
+//            listModel.number = listModel.number + 1;
+//            DataBaseManager.getInstance(context).update(listModel);
             ListItemModel listItemModel = new ListItemModel(music.name , TimeUtils.tranTime(music.longTime)  , music.artist , listModel.name , music.path );
             DataBaseManager.getInstance(context).insert(listItemModel);
             EventBus.getDefault().post(new EB_UpdataList(EB_UpdataList.UPDATAPLAYERLIST));

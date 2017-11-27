@@ -3,6 +3,7 @@ package wdd.musicplayer.ui.fragment;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,13 +19,17 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import wdd.musicplayer.R;
+import wdd.musicplayer.db.DataBaseManager;
 import wdd.musicplayer.eventbus.EB_PlayerMusic;
+import wdd.musicplayer.eventbus.EB_UpdataList;
+import wdd.musicplayer.model.ListItemModel;
 import wdd.musicplayer.model.Music;
 import wdd.musicplayer.model.PlayModel;
 import wdd.musicplayer.ui.adapter.AllFileAdapter;
@@ -73,6 +78,10 @@ public class PlayerFragment extends Fragment {
     //播放模式
     PlayModel playModel = new PlayModel();
 
+
+    MediaPlayer mediaPlayer = new MediaPlayer();
+    private ListItemModel listItemModel;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,21 +96,19 @@ public class PlayerFragment extends Fragment {
 
 
         //初始化
-        init(music);
+        init();
 
 
         return view;
 
     }
 
-    private void init(Music music) {
+    private void init() {
 
         //更新播放状态的页面信息
-        updatePlayIcon(music.isPlaying);
-        updatePlayModeIcon();
-        updatePlayFavorite();
-
-
+        initPlayIcon(music.isPlaying);
+        initPlayModeIcon();
+        initPlayFavorite();
     }
 
 
@@ -112,7 +119,8 @@ public class PlayerFragment extends Fragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void EVENT_EB_PlayerMusic(EB_PlayerMusic e){
         if(e.tag.equals(AllFileAdapter.Tag)) {
-            playingMusic(e.music);
+            music = e.music;
+            playingMusic(music);
         }
     }
 
@@ -131,27 +139,58 @@ public class PlayerFragment extends Fragment {
         this.music.isPlaying = false;
         shadowImageView_player_image.cancelRotateAnimation();
         updatePlayIcon(this.music.isPlaying);
+        changePlayFavorite();
 
         textview_player_endtime.setText(TimeUtils.tranTime(music.longTime));
 
+        playerMusic(music);
+
+    }
+
+    private void playerMusic(Music music) {
+        File file = new File(music.path);
+        try{
+            mediaPlayer.setDataSource(file.getAbsolutePath());
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
     }
 
 
+    private void initPlayIcon(boolean isPlaying) {
+        changePlayIcon(isPlaying);
+    }
+
     private void updatePlayIcon(boolean isPlaying) {
+        changePlayIcon(isPlaying);
+        music.isPlaying = !music.isPlaying;
+    }
+
+    private void changePlayIcon(boolean isPlaying) {
         if (!isPlaying){
             //更新图片是否旋转
             shadowImageView_player_image.resumeRotateAnimation();
         }else {
             shadowImageView_player_image.pauseRotateAnimation();
         }
-
         //更改播放按钮状态
         button_player_toggle.setImageResource(!isPlaying ? R.drawable.ic_pause : R.drawable.ic_play);
-        music.isPlaying = !music.isPlaying;
+    }
+
+
+    private void initPlayModeIcon() {
+        changePlayModeIcon();
+    }
+
+    private void updatePlayModeIcon() {
+        playModel.next();
+        changePlayModeIcon();
     }
 
     //更换播放模式图标
-    private void updatePlayModeIcon() {
+    private void changePlayModeIcon() {
         playModel.next();
         switch (playModel.index){
             case PlayModel.SINGLE:
@@ -170,10 +209,27 @@ public class PlayerFragment extends Fragment {
         }
     }
 
-    //更改当前歌曲是否被收藏
+
+    private void initPlayFavorite() {
+        changePlayFavorite();
+    }
+
     private void updatePlayFavorite() {
-        button_player_favorite.setImageResource(music.favorite ? R.drawable.ic_favorite_no : R.drawable.ic_favorite_yes);
-        music.favorite = !music.favorite;
+        if (music.favorite){
+            listItemModel = DataBaseManager.getInstance(getContext()).queryMusinInFavorite(music.path).get(0);
+            DataBaseManager.getInstance(getContext()).delete(listItemModel);
+        }else {
+            listItemModel = new ListItemModel(music.name , TimeUtils.tranTime(music.longTime) , music.artist , "收藏" , music.path);
+            DataBaseManager.getInstance(getContext()).insert(listItemModel);
+        }
+
+        changePlayFavorite();
+    }
+
+    //更改当前歌曲是否被收藏
+    private void changePlayFavorite() {
+        music.favorite = DataBaseManager.getInstance(getContext()).isQueryMusinInFavorite(music.path);
+        button_player_favorite.setImageResource(music.favorite ? R.drawable.ic_favorite_yes : R.drawable.ic_favorite_no);
     }
 
 
@@ -203,6 +259,7 @@ public class PlayerFragment extends Fragment {
     @OnClick(R.id.button_player_favorite)
     public void onClick_button_player_favorite(){
         updatePlayFavorite();
+        EventBus.getDefault().post(new EB_UpdataList(EB_UpdataList.UPDATAPLAYERLIST));
     }
 
     @Override
