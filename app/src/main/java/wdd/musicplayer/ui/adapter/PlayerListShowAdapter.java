@@ -64,7 +64,7 @@ public class PlayerListShowAdapter extends RecyclerView.Adapter<PlayerListShowAd
         //获取当前对象
         ListItemModel listItemModel = list.get(position);
         holder.textview_playerlistshow_name.setText(listItemModel.name);
-        String info = String.format("%s | %s" , listItemModel.time , listItemModel.artist);
+        String info = String.format("%s | %s" , TimeUtils.tranTime(listItemModel.time) , listItemModel.artist);
         holder.textview_playerlistshow_info.setText(info);
         holder.textview_playerlistshow_index.setText(String.valueOf(position + 1
         ));

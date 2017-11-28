@@ -83,10 +83,7 @@ public class AllFileAdapter extends RecyclerView.Adapter<AllFileAdapter.AllFileA
                     Log.d("wdd", "onClick--> position = " + getPosition());
 
                     //通过EventBus发送播放音频的请求
-                    EB_PlayerMusic eb_playerMusic = new EB_PlayerMusic();
-                    eb_playerMusic.music = list.get(getPosition());
-                    eb_playerMusic.tag = Tag;
-                    EventBus.getDefault().post(eb_playerMusic);
+                    EventBus.getDefault().post(new EB_PlayerMusic(EB_PlayerMusic.ALLFILE , list.get(getAdapterPosition())));
                 }
             });
         }

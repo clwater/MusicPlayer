@@ -19,7 +19,7 @@ public class ListItemModel {
     @NotNull
     public String name;
     @NotNull
-    public String time;
+    public int time;
     @NotNull
     public String artist;
     @NotNull
@@ -27,7 +27,7 @@ public class ListItemModel {
     @NotNull
     public String path;
 
-    public ListItemModel(String name, String time, String artist, String parent , String path) {
+    public ListItemModel(String name, int time, String artist, String parent , String path) {
         this.name = name;
         this.time = time;
         this.artist = artist;

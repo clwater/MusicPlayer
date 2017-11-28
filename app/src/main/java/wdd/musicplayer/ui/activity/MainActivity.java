@@ -118,6 +118,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageScrollStateChanged(int state) {}
         });
+
+        viewpager_main.setOffscreenPageLimit(2);
         changeFragment();
     }
 

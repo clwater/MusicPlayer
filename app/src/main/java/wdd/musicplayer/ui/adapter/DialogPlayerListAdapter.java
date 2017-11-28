@@ -108,7 +108,7 @@ public class DialogPlayerListAdapter extends RecyclerView.Adapter<DialogPlayerLi
         if (!check){
 //            listModel.number = listModel.number + 1;
 //            DataBaseManager.getInstance(context).update(listModel);
-            ListItemModel listItemModel = new ListItemModel(music.name , TimeUtils.tranTime(music.longTime)  , music.artist , listModel.name , music.path );
+            ListItemModel listItemModel = new ListItemModel(music.name , music.longTime  , music.artist , listModel.name , music.path );
             DataBaseManager.getInstance(context).insert(listItemModel);
             EventBus.getDefault().post(new EB_UpdataList(EB_UpdataList.UPDATAPLAYERLIST));
             FileShowAdapter.closeDialog();
