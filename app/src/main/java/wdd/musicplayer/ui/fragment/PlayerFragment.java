@@ -192,7 +192,6 @@ public class PlayerFragment extends Fragment {
 
     //更换播放模式图标
     private void changePlayModeIcon() {
-        playModel.next();
         switch (playModel.index){
             case PlayModel.SINGLE:
                 button_player_mode.setImageResource(R.drawable.ic_play_mode_single);
