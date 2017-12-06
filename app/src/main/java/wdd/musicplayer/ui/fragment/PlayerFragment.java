@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -22,6 +23,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -77,16 +79,17 @@ public class PlayerFragment extends Fragment {
     @BindView(R.id.seekbar_player_seekbar)
     SeekBar seekbar_player_seekbar;
 
-    Music music = new Music();
-    Music _music = new Music();
+    private Music music = new Music();
+    private Music _music = new Music();
 
-    List<Music> musicPlayerList = new ArrayList<>();
+    private List<Music> musicPlayerList = new ArrayList<>();
 
     //播放模式
-    PlayModel playModel = new PlayModel();
+    private PlayModel playModel = new PlayModel();
 
 
-    MediaPlayer mediaPlayer = new MediaPlayer();
+    private MediaPlayer mediaPlayer = new MediaPlayer();
+    private int playerIndex = 0;
     private ListItemModel listItemModel;
 
     Timer timer;
@@ -120,12 +123,18 @@ public class PlayerFragment extends Fragment {
         initPlayIcon(music.isPlaying);
         initPlayModeIcon();
         initPlayFavorite();
+
+        initFirstList();
+    }
+
+    private void initFirstList() {
+        if(initMusicPlayerList("收藏")) {
+            updatePlayIcon();
+        }
     }
 
 
-
-
-    private void initMusicPlayerList(String parent) {
+    private boolean initMusicPlayerList(String parent) {
         musicPlayerList.clear();
         List<ListItemModel> listItemModels = DataBaseManager.getInstance(getContext()).queryByWhere(ListItemModel.class,
                 "parent" , new String[]{parent});
@@ -138,10 +147,13 @@ public class PlayerFragment extends Fragment {
             musicPlayerList.add(music);
         }
         if (musicPlayerList.size() > 0) {
-            music = musicPlayerList.get(0);
+            playerIndex = 0 ;
+            music = musicPlayerList.get(playerIndex);
             playingMusic(music);
+            return true;
         }
 
+        return false;
 
     }
 
@@ -167,7 +179,6 @@ public class PlayerFragment extends Fragment {
         seekbar_player_seekbar.setMax(music.longTime);
         seekbar_player_seekbar.setOnSeekBarChangeListener(new SeekbarListener());
         prepareMusic(music);
-
     }
 
 
@@ -194,10 +205,79 @@ public class PlayerFragment extends Fragment {
         try{
             mediaPlayer.setDataSource(file.getAbsolutePath());
             mediaPlayer.prepare();
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    Log.d("wdd" , "onCompletion");
+                    playNextMusic(true);
+                }
+            });
             playerMusic();
         }catch(Exception ex){
             ex.printStackTrace();
         }
+    }
+
+    private void playLastMusic() {
+        int listSize = musicPlayerList.size();
+        switch (playModel.index){
+            case PlayModel.SINGLE:
+                break;
+            case PlayModel.LOOP:
+                playerIndex--;
+                if (playerIndex <= 0){
+                    playerIndex = listSize - 1;
+                }
+                break;
+            case PlayModel.LIST:
+                playerIndex--;
+                if (playerIndex <= 0){
+                    playerIndex = 0;
+                    Toast.makeText(getActivity() , "已经是第一首" , Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                break;
+            case PlayModel.SHUFFLE:
+                Random random = new Random();
+                playerIndex = random.nextInt(listSize);
+                break;
+            default:break;
+        }
+        music = musicPlayerList.get(playerIndex);
+        playingMusic(music);
+    }
+
+
+    private void playNextMusic(boolean finish) {
+        int listSize = musicPlayerList.size();
+        switch (playModel.index){
+            case PlayModel.SINGLE:
+                break;
+            case PlayModel.LOOP:
+                playerIndex++;
+                if (playerIndex >= listSize){
+                    playerIndex = 0;
+                }
+                break;
+            case PlayModel.LIST:
+                playerIndex++;
+                if (playerIndex >= listSize){
+                    playerIndex = listSize - 1;
+                    Toast.makeText(getActivity() , "已经是最后一首" , Toast.LENGTH_SHORT).show();
+                    if (finish){
+                        updatePlayIcon();
+                    }
+                    return;
+                }
+                break;
+            case PlayModel.SHUFFLE:
+                Random random = new Random();
+                playerIndex = random.nextInt(listSize);
+                break;
+            default:break;
+        }
+        music = musicPlayerList.get(playerIndex);
+        playingMusic(music);
     }
 
     private void playerMusic() {
@@ -229,6 +309,7 @@ public class PlayerFragment extends Fragment {
 
     private void initPlayIcon(boolean isPlaying) {
         changePlayIcon(isPlaying);
+
     }
 
     private void updatePlayIcon() {
@@ -243,14 +324,17 @@ public class PlayerFragment extends Fragment {
     }
 
     private void changePlayIcon(boolean isPlaying) {
-        if (!isPlaying){
-            //更新图片是否旋转
-            shadowImageView_player_image.resumeRotateAnimation();
-        }else {
-            shadowImageView_player_image.pauseRotateAnimation();
+        if (music.path != null) {
+
+            if (!isPlaying) {
+                //更新图片是否旋转
+                shadowImageView_player_image.resumeRotateAnimation();
+            } else {
+                shadowImageView_player_image.pauseRotateAnimation();
+            }
+            //更改播放按钮状态
+            button_player_toggle.setImageResource(!isPlaying ? R.drawable.ic_pause : R.drawable.ic_play);
         }
-        //更改播放按钮状态
-        button_player_toggle.setImageResource(!isPlaying ? R.drawable.ic_pause : R.drawable.ic_play);
     }
 
 
@@ -316,17 +400,24 @@ public class PlayerFragment extends Fragment {
 
     @OnClick(R.id.button_player_last)
     public void onClick_button_player_last(){
-
+        if (music.path != null) {
+            playLastMusic();
+        }
     }
+
 
     @OnClick(R.id.button_player_toggle)
     public void onClick_button_player_toggle(){
-        updatePlayIcon();
+        if (music.path != null) {
+            updatePlayIcon();
+        }
     }
 
     @OnClick(R.id.button_player_next)
     public void onClick_button_player_next(){
-
+        if (music.path != null) {
+            playNextMusic(false);
+        }
     }
 
     @OnClick(R.id.button_player_favorite)

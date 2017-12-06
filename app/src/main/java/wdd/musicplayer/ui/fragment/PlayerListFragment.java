@@ -112,7 +112,11 @@ public class PlayerListFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String name = edittext_playerlist.getText().toString();
-                createNewList(name);
+                if (name.isEmpty()){
+                    Toast.makeText(getActivity() , "请输入列表名称" , Toast.LENGTH_SHORT).show();
+                }else {
+                    createNewList(name);
+                }
             }
         });
         builder.setNegativeButton("取消", null);

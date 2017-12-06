@@ -6,9 +6,9 @@ package wdd.musicplayer.model;
 
 public class PlayModel {
     public final static int SINGLE = 0,
-               LOOP = 1,
-               LIST = 2,
-               SHUFFLE = 3;
+            LIST = 1,
+            LOOP = 2,
+            SHUFFLE = 3;
     public int index;
 
     //构造函数 初始化模式为LOOP
