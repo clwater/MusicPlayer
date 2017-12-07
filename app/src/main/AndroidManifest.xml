@@ -21,6 +21,9 @@
         <activity android:name=".ui.activity.ChooseLoaclFileActivity"/>
         <activity android:name=".ui.activity.LoaclFileShowActivity"/>
         <activity android:name=".ui.activity.PlayerListActivity"/>
+
+        <service android:name=".service.ForegroundService"/>
+
     </application>
 
 </manifest>

@@ -1,9 +1,11 @@
 package wdd.musicplayer.ui.fragment;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -30,6 +32,7 @@ import java.util.TimerTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import wdd.musicplayer.service.ForegroundService;
 import wdd.musicplayer.R;
 import wdd.musicplayer.db.DataBaseManager;
 import wdd.musicplayer.eventbus.EB_PlayerList;
@@ -38,10 +41,11 @@ import wdd.musicplayer.eventbus.EB_UpdataList;
 import wdd.musicplayer.model.ListItemModel;
 import wdd.musicplayer.model.Music;
 import wdd.musicplayer.model.PlayModel;
-import wdd.musicplayer.ui.adapter.AllFileAdapter;
 import wdd.musicplayer.ui.weiget.ShadowImageView;
 import wdd.musicplayer.utils.MediaUtils;
 import wdd.musicplayer.utils.TimeUtils;
+
+import static android.content.Context.BIND_AUTO_CREATE;
 
 /**
  * 播放页面
@@ -125,6 +129,26 @@ public class PlayerFragment extends Fragment {
         initPlayFavorite();
 
         initFirstList();
+
+        initForegroundService();
+    }
+
+    private void initForegroundService() {
+        Intent foregroundService = new Intent(getActivity() , ForegroundService.class);
+        foregroundService.putExtra("music" , music);
+        ServiceConnection serviceConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName componentName) {
+
+            }
+        };
+
+        getActivity().bindService(foregroundService, serviceConnection , BIND_AUTO_CREATE);
     }
 
     private void initFirstList() {
@@ -324,6 +348,7 @@ public class PlayerFragment extends Fragment {
     }
 
     private void changePlayIcon(boolean isPlaying) {
+
         if (music.path != null) {
 
             if (!isPlaying) {
