@@ -44,7 +44,7 @@ import wdd.musicplayer.utils.SharedPreferencesUtils;
 public class MainActivity extends AppCompatActivity {
 
     //定义主页面菜单Textview
-    @BindViews({R.id.radiobutton_main_playerlist, R.id.radiobutton_main_player, R.id.radiobutton_main_file, R.id.radiobutton_main_setting})
+    @BindViews({R.id.radiobutton_main_playerlist, R.id.radiobutton_main_player, R.id.radiobutton_main_file})
     List<RadioButton> radioButtons;
 
     //标题内容
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         list.add(new PlayerListFragment());
         list.add(new PlayerFragment());
         list.add(new FileFragment());
-        list.add(new SettingFragment());
+//        list.add(new SettingFragment());
 
         //设置ViewPager的适配器
         viewpager_main.setAdapter(new FragmentAdapter(getSupportFragmentManager(), list));
@@ -154,11 +154,11 @@ public class MainActivity extends AppCompatActivity {
         changeFragment();
     }
 
-    @OnClick(R.id.radiobutton_main_setting)
-    public void onClick_radiobutton_main_setting(){
-        index = 3;
-        changeFragment();
-    }
+//    @OnClick(R.id.radiobutton_main_setting)
+//    public void onClick_radiobutton_main_setting(){
+//        index = 3;
+//        changeFragment();
+//    }
 
 
 }
