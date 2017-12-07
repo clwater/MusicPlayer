@@ -88,6 +88,11 @@ public class DataBaseManager {
     }
 
 
+    /**
+     * @param path
+     * @return
+     * 获取"收藏"菜单歌曲列表
+     */
     public ArrayList<ListItemModel> queryMusinInFavorite(String path){
         return liteOrm.query(new QueryBuilder<ListItemModel>(ListItemModel.class)
                 .whereEquals("path", path)
@@ -95,6 +100,11 @@ public class DataBaseManager {
                 .whereEquals("parent", "收藏"));
     }
 
+    /**
+     * @param path
+     * @return
+     * 判断某个路径下的歌曲是否被收藏
+     */
     public boolean isQueryMusinInFavorite(String path){
         return queryMusinInFavorite(path).size() > 0;
     }

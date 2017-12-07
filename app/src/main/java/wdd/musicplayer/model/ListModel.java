@@ -8,7 +8,9 @@ import com.litesuits.orm.db.enums.AssignType;
 import java.io.Serializable;
 
 /**
- * Created by gengzhibo on 2017/11/23.
+ * ListModel表
+ * 播放列表概要情况
+ * 简单包含列表名称及包含的数量
  */
 
 @Table("ListModel")

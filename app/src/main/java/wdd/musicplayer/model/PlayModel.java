@@ -1,7 +1,7 @@
 package wdd.musicplayer.model;
 
 /**
- * Created by yszsyf on 2017/11/11.
+ * 播放模式
  */
 
 public class PlayModel {

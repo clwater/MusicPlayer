@@ -1,17 +1,15 @@
 package wdd.musicplayer.model;
 
-import android.net.Uri;
 
 import java.io.Serializable;
 
 /**
- * Created by gengzhibo on 2017/11/10.
+ * 音频信息
  */
 
 public class Music implements Serializable {
-    public String name , artist , path , filename ;
-    public Long ALBUM_ID , id ;
-    public int longTime;
-    public boolean favorite = false , isPlaying = false;
-//    public int mode = 0;
+    public String name , artist , path , filename; //音频名称,作者,路径,文件名
+    public Long ALBUM_ID , id ; //手机系统数据库相关id , 应用数据库id
+    public int longTime;        //持续时间
+    public boolean favorite = false , isPlaying = false; //是否在收藏列表中,是否正在播放
 }

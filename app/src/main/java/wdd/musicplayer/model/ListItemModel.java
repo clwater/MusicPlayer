@@ -6,7 +6,9 @@ import com.litesuits.orm.db.annotation.Table;
 import com.litesuits.orm.db.enums.AssignType;
 
 /**
- * Created by gengzhibo on 2017/11/23.
+ * ListItemModel表
+ * 主要作用是保存播放列表的详细
+ * 通过parent键区分在哪个播放列表中
  */
 
 @Table("ListItemModel")

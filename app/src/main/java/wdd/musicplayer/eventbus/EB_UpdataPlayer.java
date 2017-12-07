@@ -1,7 +1,7 @@
 package wdd.musicplayer.eventbus;
 
 /**
- * Created by gengzhibo on 2017/12/7.
+ * 通过通知栏控制播放
  */
 
 public class EB_UpdataPlayer {

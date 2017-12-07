@@ -1,6 +1,5 @@
 package wdd.musicplayer.service;
 
-import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -8,21 +7,15 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import wdd.musicplayer.R;
 import wdd.musicplayer.eventbus.EB_UpdataNotification;
@@ -30,11 +23,12 @@ import wdd.musicplayer.model.Music;
 import wdd.musicplayer.utils.MediaUtils;
 
 /**
- * Created by gengzhibo on 2017/12/6.
+ * 前台service 通知栏常驻
  */
 
 public class ForegroundService extends Service {
 
+    //构建Service的Binder用户bind回调
     private ForegroundBinder foregroundBinder = new ForegroundBinder();
 
     public static final String MUSICPLAYER_NEXT = "musicplayer_next";
@@ -42,27 +36,22 @@ public class ForegroundService extends Service {
     public static final String MUSICPLAYER_PLAY = "musicplayer_play";
     public static final String MUSICPLAYER_FAV = "musicplayer_fav";
 
-    int index = 1;
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
+
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         EventBus.getDefault().register(this);
 
+        //初始化通知栏信息
         initNotification(intent);
 
         return foregroundBinder;
     }
 
     private void initNotification(Intent intent) {
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        //注册广播
         registerReceiver();
         Music music = (Music) intent.getSerializableExtra("music");
         updataNotification(music);
@@ -156,22 +145,42 @@ public class ForegroundService extends Service {
 
 
     private void registerReceiver() {
+        //动态注册系统广播 用户通知栏中点击相关按钮后通过系统广播发送信息以便于程序内其它模块接受
+        //构建广播拦截器及相关拦截action(添加拦截器已过滤无用广播)
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(MUSICPLAYER_NEXT);
         intentFilter.addAction(MUSICPLAYER_LAST);
         intentFilter.addAction(MUSICPLAYER_PLAY);
         intentFilter.addAction(MUSICPLAYER_FAV);
+
+        //将过滤器及本Service绑定
         NotificationBtnClickReceiver notificationBtnClickReceiver = new NotificationBtnClickReceiver();
         registerReceiver(notificationBtnClickReceiver, intentFilter);
     }
 
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
+    /**
+     * @param e
+     * 通过EventBus调用更新通知栏显示的内容
+     */
     @Subscribe
     public void EVENTBUD_EB_UpdataNotification(EB_UpdataNotification e){
         updataNotification(e.music);
     }
 
+    /**
+     * @param intent
+     * @param flags
+     * @param startId
+     * @return
+     * service默认方法
+     */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         return super.onStartCommand(intent, flags, startId);

@@ -3,7 +3,7 @@ package wdd.musicplayer.eventbus;
 import wdd.musicplayer.model.ListModel;
 
 /**
- * Created by gengzhibo on 2017/11/24.
+ * 重命名播放列表后更新列表名称
  */
 
 public class EB_RenamePlayerListName {

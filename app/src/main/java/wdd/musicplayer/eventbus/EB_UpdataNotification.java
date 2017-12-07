@@ -3,7 +3,7 @@ package wdd.musicplayer.eventbus;
 import wdd.musicplayer.model.Music;
 
 /**
- * Created by gengzhibo on 2017/12/7.
+ * 更新通知栏中的页面信息
  */
 
 public class EB_UpdataNotification {

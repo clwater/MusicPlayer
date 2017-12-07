@@ -82,10 +82,12 @@ public class MainActivity extends AppCompatActivity {
         //设置系统通知栏颜色
         StatusBarCompat.setStatusBarColor(this , Color.parseColor("#3C5F78"));
 
+        //初始化程序数据
         initPlayerList();
     }
 
     private void initPlayerList() {
+        //如果是首次打开页面则添加一个名为收藏的歌单(不可删除及改名)
         if (SharedPreferencesUtils.getFirst(this)){
             ListModel listModel = new ListModel("收藏" , 0);
             DataBaseManager.getInstance(this).insert(listModel);
@@ -135,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //首页菜单栏四个标题的点击事件
+    //首页菜单栏三个标题的点击事件
     @OnClick(R.id.radiobutton_main_playerlist)
     public void onClick_radiobutton_main_playerlist(){
         index = 0;
@@ -154,6 +156,8 @@ public class MainActivity extends AppCompatActivity {
         changeFragment();
     }
 
+
+    //这个是设置页面. 暂时没有内容 需要的话再添加
 //    @OnClick(R.id.radiobutton_main_setting)
 //    public void onClick_radiobutton_main_setting(){
 //        index = 3;

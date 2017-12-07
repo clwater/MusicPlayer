@@ -1,7 +1,7 @@
 package wdd.musicplayer.eventbus;
 
 /**
- * Created by gengzhibo on 2017/11/27.
+ * 更新本地文件-文件页面信息
  */
 
 public class EB_UpdataList {
