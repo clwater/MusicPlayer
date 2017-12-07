@@ -32,6 +32,8 @@ import java.util.TimerTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import wdd.musicplayer.eventbus.EB_UpdataNotification;
+import wdd.musicplayer.eventbus.EB_UpdataPlayer;
 import wdd.musicplayer.service.ForegroundService;
 import wdd.musicplayer.R;
 import wdd.musicplayer.db.DataBaseManager;
@@ -345,6 +347,8 @@ public class PlayerFragment extends Fragment {
         }else {
             stopMusic();
         }
+
+        EventBus.getDefault().post(new EB_UpdataNotification(music));
     }
 
     private void changePlayIcon(boolean isPlaying) {
@@ -449,6 +453,7 @@ public class PlayerFragment extends Fragment {
     public void onClick_button_player_favorite(){
         updatePlayFavorite();
         EventBus.getDefault().post(new EB_UpdataList(EB_UpdataList.UPDATAPLAYERLIST));
+        EventBus.getDefault().post(new EB_UpdataNotification(music));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -471,6 +476,19 @@ public class PlayerFragment extends Fragment {
             playingMusic(music);
         }else if (e.tag.equals(EB_PlayerMusic.LIST)){
             initMusicPlayerList(e.parent);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void EVENT_EB_UpdataPlayer(EB_UpdataPlayer e){
+        if (e.tag.equals(EB_UpdataPlayer.LAST)){
+            onClick_button_player_last();
+        }else if (e.tag.equals(EB_UpdataPlayer.NEXT)){
+            onClick_button_player_next();
+        }else if (e.tag.equals(EB_UpdataPlayer.PALY)){
+            onClick_button_player_toggle();
+        }else if (e.tag.equals(EB_UpdataPlayer.FAV)){
+            onClick_button_player_favorite();
         }
     }
 
