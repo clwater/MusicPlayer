@@ -1,10 +1,15 @@
 package wdd.musicplayer.utils;
 
 /**
- * Created by gengzhibo on 2017/11/14.
+ * 时间工具类
  */
 
 public class TimeUtils {
+    /**
+     * @param longTime
+     * @return
+     * 格式化时间展示
+     */
     public static String tranTime(int longTime){
         //获取时间 单位为毫秒
         int time = Integer.valueOf(longTime);
