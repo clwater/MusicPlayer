@@ -21,7 +21,6 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
@@ -35,5 +34,6 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     //EventBus
     compile 'org.greenrobot:eventbus:3.0.0'
+    //libs目录下 lite-orm数据库包
     implementation files('libs/lite-orm-1.9.2.jar')
 }
