@@ -58,9 +58,12 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Al
         ListModel listModel = list.get(position);
         //设置歌曲名
         holder.textview_playerlist_name.setText(listModel.name);
+        //设置info信息
         String info = String.format("%s 首歌" , String.valueOf(listModel.number) );
         holder.textview_playerlist_info.setText(info);
 
+
+        //设置播放列表的图标
         if (listModel.name.equals("收藏")) {
             holder.textview_playerlist.setBackgroundResource(R.drawable.ic_favorite_yes);
         }else {
@@ -90,25 +93,28 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Al
         @BindView(R.id.textview_playerlist)
         TextView textview_playerlist;
 
+        /**
+         * @param view
+         */
         AllFileAdapterHolder(final View view) {
             super(view);
             ButterKnife.bind(this , view);
+
+            //item点击响应事件
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //构建intent并传入listmodel数据 跳转至PlayerListActivity页面
                     Intent intent = new Intent(context , PlayerListActivity.class);
-//                    intent.putExtra("name" , list.get(getAdapterPosition()).name);
                     intent.putExtra("ListModel" , list.get(getAdapterPosition()));
-
                     context.startActivity(intent);
                 }
             });
-
+            //弹出菜单栏的点击事件
             imagebutton_playerlist_action.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     showPopupMenu(imagebutton_playerlist_action , getAdapterPosition());
-
                 }
             });
         }
@@ -122,26 +128,35 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Al
         // 获取布局文件
         popupMenu.getMenuInflater().inflate(R.menu.playerlist_menu, popupMenu.getMenu());
         popupMenu.show();
-
+        //判断当前播放列表是否为"收藏"列表
+        //如果是首个(收藏列表)即将重命名和隐藏菜单隐蔽
         if(postion == 0){
             popupMenu.getMenu().findItem(R.id.playerlist_rename).setVisible(false);
             popupMenu.getMenu().findItem(R.id.playerlist_del).setVisible(false);
         }
-
+        //弹出的菜单栏中菜单内容点击响应
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                //获取当前listmodel
                 ListModel listModel = list.get(postion);
-
+                //根据id判断当前点击的菜单项是哪个
                 switch (item.getItemId()){
+                    //播放本歌单
                     case R.id.playerlist_player:
+                        //通过EventBus发送播放本播放列表的请求
                         EventBus.getDefault().post(new EB_PlayerMusic(EB_PlayerMusic.LIST , listModel.name));
                         break;
+                    //重命名本歌单
                     case R.id.playerlist_rename:
+                        //通过EventBus发送重命名本播放列表的请求
                         EventBus.getDefault().post(new EB_RenamePlayerListName(listModel));
                         break;
+                    //删除本歌单
                     case R.id.playerlist_del:
+                        //从数据库中删除本歌单
                         DataBaseManager.getInstance(context).delete(listModel);
+                        //通过EventBus发送更新播放列表的请求
                         EventBus.getDefault().post(new EB_UpdataList(EB_UpdataList.UPDATAPLAYERLIST));
                         break;
 

@@ -77,6 +77,7 @@ public class AllFileAdapter extends RecyclerView.Adapter<AllFileAdapter.AllFileA
         AllFileAdapterHolder(View view) {
             super(view);
             ButterKnife.bind(this , view);
+            //当前item的点击时间
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

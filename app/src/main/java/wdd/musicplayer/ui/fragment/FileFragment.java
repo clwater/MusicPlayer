@@ -26,10 +26,6 @@ import wdd.musicplayer.utils.MediaUtils;
 
 public class FileFragment extends Fragment {
 
-
-    //本地文件中获取音频信息
-    List<Music> LocalMusicList = new ArrayList<Music>();
-
     //获取所有歌曲的tag
     @BindView(R.id.textview_file_alltag)
     TextView textview_file_alltag;
@@ -57,20 +53,22 @@ public class FileFragment extends Fragment {
     }
 
     private void init() {
-
         initFragment();
+        //更改对应标签的样式
         changeTag();
     }
 
     //初始化下部列表列表Fragment信息
     private void initFragment() {
+        //获取Fragment管理器
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        //初始化allFileFragment及localFileFragment
         allFileFragment = new AllFileFragment();
         localFileFragment = new LocalFileFragment();
-
+        //将这两个fragment添加到本页面中
         transaction.add(R.id.fragment_file_all , allFileFragment , allFileFragment.getTag());
         transaction.add(R.id.fragment_file_local , localFileFragment , localFileFragment.getTag());
-
+        //默认展示所有歌曲的页面 隐藏本地文件夹
         transaction.hide(localFileFragment);
 
         transaction.commit();

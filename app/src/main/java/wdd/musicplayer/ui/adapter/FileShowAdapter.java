@@ -67,7 +67,9 @@ public class FileShowAdapter extends RecyclerView.Adapter<FileShowAdapter.AllFil
     public void onBindViewHolder(AllFileAdapterHolder holder, int position) {
         //获取当前对象
         Music music = list.get(position);
+        //设置文件名称
         holder.textview_fileshow_name.setText(music.filename);
+        //设置info信息并格式化结构
         String info = String.format("%s | %s" , music.artist , TimeUtils.tranTime(music.longTime));
         holder.textview_fileshow_info.setText(info);
     }
@@ -87,17 +89,11 @@ public class FileShowAdapter extends RecyclerView.Adapter<FileShowAdapter.AllFil
         @BindView(R.id.imagebutton_fileshow_action)
         ImageView imagebutton_fileshow_action;
 
+
         AllFileAdapterHolder(View view) {
             super(view);
             ButterKnife.bind(this , view);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d("wdd", "onClick--> position = " + getAdapterPosition());
-
-                }
-            });
-
+            //item尾部菜单按钮点击响应事件
             imagebutton_fileshow_action.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -107,6 +103,11 @@ public class FileShowAdapter extends RecyclerView.Adapter<FileShowAdapter.AllFil
         }
     }
 
+    /**
+     * @param view
+     * @param postion
+     * 展示弹出菜单栏
+     */
     private  void showPopupMenu(final View view , final int postion) {
         // 这里的view代表popupMenu需要依附的view
         PopupMenu popupMenu = new PopupMenu(context, view);
@@ -114,11 +115,15 @@ public class FileShowAdapter extends RecyclerView.Adapter<FileShowAdapter.AllFil
         popupMenu.getMenuInflater().inflate(R.menu.flodershow_menu, popupMenu.getMenu());
         popupMenu.show();
 
+        //菜单栏中内容的点击事件
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                //获取当前音频对象
                 Music music = list.get(postion);
+                //判断当前点击的按钮是否为添加到播放列表
                 if (item.getItemId() == R.id.flodershow_insert){
+                    //展示选择播放列表的dialog
                     showChooseListDiaog(music);
                 }
 
@@ -127,45 +132,76 @@ public class FileShowAdapter extends RecyclerView.Adapter<FileShowAdapter.AllFil
         });
     }
 
+    /**
+     * @param music
+     * 展示选择播放列表的dialog
+     */
     private void showChooseListDiaog(Music music) {
+        //构建dialog
         AlertDialog dialog = createChooseListDialog(music);
+        //动态更改dialog的大小
         changeDialogSize(dialog);
 
     }
 
+    /**
+     * @param music
+     * @return
+     * 构造AlertDialog对象
+     */
     private AlertDialog createChooseListDialog(Music music) {
+        //创建dialog构建对话
         final AlertDialog.Builder builder = new AlertDialog.Builder(context , R.style.MusicPlayer_Dialog);
+        //设置标题
         builder.setTitle("选择播放列表");
+        //构建布局文件
         LinearLayout linearLayout = (LinearLayout) layoutInflater.inflate(R.layout.dialog_chooselist, null);
+        //设置布局文件
         builder.setView(linearLayout);
+        //设置点击非dialog区域的当前dialog自动关闭
         builder.setCancelable(true);
 
+        //获取布局文件中的RecyclerView对象
         final RecyclerView recyclerview_dialog_chooselist  = linearLayout.findViewById(R.id.recyclerview_dialog_chooselist);
-
+        //设置RecyclerView布局形式
         recyclerview_dialog_chooselist.setLayoutManager(new LinearLayoutManager(context));
+        //通过系统数据库获取listModel对象
         List<ListModel> listModel = DataBaseManager.getInstance(context).queryAll(ListModel.class);
+        //创建DialogPlayerListAdapter
         DialogPlayerListAdapter dialogPlayerListAdapter = new DialogPlayerListAdapter(context , listModel , music);
+        //设置recyclerview_dialog_chooselist的adapter为DialogPlayerListAdapter
         recyclerview_dialog_chooselist.setAdapter(dialogPlayerListAdapter);
-
+        //设置取消按钮的内容
         builder.setNegativeButton("取消", null);
-
+        //根据内容构建dialog
         dialog = builder.create();
+        //展示dialog
         dialog.show();
         return dialog;
     }
 
+    /**
+     * @param dialog
+     * 动态更改dialog的大小
+     */
     private void changeDialogSize(AlertDialog dialog) {
+        //获取当前窗口对象
         Window window = dialog.getWindow();
+        //获取当前窗口的属性
         WindowManager.LayoutParams lp = window.getAttributes();
+        //设置属性为居中
         lp.gravity = Gravity.CENTER;
 
-
+        //获取当前窗口的宽度
         WindowManager wm = activity.getWindowManager();
         int width = wm.getDefaultDisplay().getWidth();
+        //调整将要设置的dialog的窗口的宽度的数据
         width = width / 5 * 3;
-
+        //更改窗口的宽度为width
         lp.width = width;
+        //更改窗口的高度为自适应
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        //设置dialog的属性
         dialog.getWindow().setAttributes(lp);
     }
 

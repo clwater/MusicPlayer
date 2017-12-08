@@ -11,9 +11,10 @@ import butterknife.ButterKnife;
 import wdd.musicplayer.R;
 
 /**
- * 设置页面
+ * Created by gengzhibo on 2017/12/8.
  */
 
+//这个页面....  不知道写什么设置  没什么可设置的  就单纯的留个页面 有需要在添就好
 public class SettingFragment extends Fragment {
     @Nullable
     @Override

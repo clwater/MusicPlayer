@@ -47,10 +47,11 @@ public class ChooseFileAdapter extends RecyclerView.Adapter<ChooseFileAdapter.Al
         //获取当前对象
         FileModel fileModel = list.get(position);
 
-
+        //设置文件名称及创建时间
         holder.textview_choose_name.setText(fileModel.name);
         holder.textview_choose_time.setText(fileModel.createTime);
         String info = null;
+        //根据file的类型(音频/文件夹/其他)设置不同的图标及文本信息
         switch (fileModel.type){
             case 0:
                 holder.imageview_choose_folder.setBackgroundResource(R.drawable.ic_folder);
@@ -66,7 +67,7 @@ public class ChooseFileAdapter extends RecyclerView.Adapter<ChooseFileAdapter.Al
                 break;
             default: break;
         }
-
+        //设置文本信息
         holder.textview_choose_info.setText(info);
 
 
@@ -92,11 +93,14 @@ public class ChooseFileAdapter extends RecyclerView.Adapter<ChooseFileAdapter.Al
         AllFileAdapterHolder(View view) {
             super(view);
             ButterKnife.bind(this , view);
+            //当前item的点击事件
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Log.d("wdd", "onClick--> position = " + getPosition());
+                    //获取被点击的FileModel对象
                     FileModel fileModel = list.get(getAdapterPosition());
+                    //如果当前对象为文件 则创建一个新的页面 展示此文件夹的信息
                     if (fileModel.type == 0) {
                         Intent intent = new Intent(context, ChooseLoaclFileActivity.class);
                         intent.putExtra("path",fileModel.path);

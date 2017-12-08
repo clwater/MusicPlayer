@@ -56,6 +56,7 @@ public class LoaclFileAdapter extends RecyclerView.Adapter<LoaclFileAdapter.AllF
         FileModel fileModel = list.get(position);
         //设置歌曲名
         holder.textview_fileitem_name.setText(fileModel.name);
+        //获取info并设置
         String info = String.format("%s 首歌 | %s" , String.valueOf(fileModel.number) , fileModel.path);
         holder.textview_fileitem_info.setText(info);
 
@@ -80,20 +81,22 @@ public class LoaclFileAdapter extends RecyclerView.Adapter<LoaclFileAdapter.AllF
         AllFileAdapterHolder(final View view) {
             super(view);
             ButterKnife.bind(this , view);
+            //item点击事件
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //构建intent对象 添加path内容
+                    //进入LoaclFileShowActivity页面
                     Intent intent = new Intent(context , LoaclFileShowActivity.class);
                     intent.putExtra("path" , list.get(getAdapterPosition()).path);
                     context.startActivity(intent);
                 }
             });
-
+            //设置菜单栏点击事件响应内容
             imagebutton_fileitem_action.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     showPopupMenu(imagebutton_fileitem_action , getAdapterPosition());
-
                 }
             });
         }
@@ -107,13 +110,15 @@ public class LoaclFileAdapter extends RecyclerView.Adapter<LoaclFileAdapter.AllF
         // 获取布局文件
         popupMenu.getMenuInflater().inflate(R.menu.floder_menu, popupMenu.getMenu());
         popupMenu.show();
-
+        //弹出菜单栏点击事件
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                //获取当前fileModel对象
                 FileModel fileModel = list.get(postion);
-
+                //获取当前点击的菜单栏id
                 switch (item.getItemId()){
+                    //刷新文件夹
                     case R.id.floder_refresh:
                         final FileModel checkFile = DataBaseManager.getInstance(context).query(fileModel.id , FileModel.class);
                         FileUtils.findMusicInFile(context , checkFile.path , new FileUtils.FindMusicInFileBack() {
@@ -125,8 +130,11 @@ public class LoaclFileAdapter extends RecyclerView.Adapter<LoaclFileAdapter.AllF
                             }
                         });
                         break;
+                        //删除文件夹
                     case R.id.floder_del:
+                        //从数据库中删除该条内容
                         DataBaseManager.getInstance(context).delete(fileModel);
+                        //通过EventBus通知页面更新文件夹页面内容
                         EventBus.getDefault().post(new EB_UpdataList(EB_UpdataList.UPDATALOACLFILELIST));
                         break;
                 }

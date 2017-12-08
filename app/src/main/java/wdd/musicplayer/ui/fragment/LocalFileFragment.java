@@ -43,9 +43,9 @@ public class LocalFileFragment extends Fragment {
     private LoaclFileAdapter localFileAdapter;
 
     @BindView(R.id.recycler_fileall_list)
-    RecyclerView recycler_fileall_list;
+    RecyclerView recycler_fileall_list;     //获取页面RecyclerView
     @BindView(R.id.textview_filelocal_bottom)
-    TextView textview_filelocal_bottom;
+    TextView textview_filelocal_bottom;     //获取底部文本信息
 
     @Override
     public void onDestroy() {
@@ -100,38 +100,33 @@ public class LocalFileFragment extends Fragment {
 //        }
     }
 
-    private void initDB() {
-        if (SharedPreferencesUtils.getFirst(getContext())){
 
-
-            String MusicPath = Environment.getExternalStorageDirectory() + "/Music/";
-            final File file = new File(MusicPath);
-            FileUtils.findMusicInFile(getContext() , file.getPath() , new FileUtils.FindMusicInFileBack() {
-                @Override
-                public void onCompleted(List<Music> musicList) {
-                    FileModel fileModel = new FileModel(file.getName() , file.getPath() , musicList.size());
-                    DataBaseManager.getInstance(getContext()).insert(fileModel);
-                    SharedPreferencesUtils.setFirst(getContext());
-                }
-            });
-
-        }
-    }
-
+    /**
+     * 添加文件夹按钮响应事件
+     */
     @OnClick(R.id.textview_filelocal_choose)
     public void OnClick_textview_filelocal_choose(){
+        //构建intent并设置path参数 跳转到选择文件夹的页面
         Intent intent = new Intent(getContext() , ChooseLoaclFileActivity.class);
         intent.putExtra("path" , Environment.getExternalStorageDirectory().getPath());
 //        intent.putExtra("path" , Environment.getExternalStorageDirectory());
         startActivity(intent);
     }
 
+    /**
+     * @param e
+     * 收到并处理通过EventBus传递的更新页面的请求信息
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void OnEvent_EB_updataLoaclFileList(EB_UpdataList e){
         if (e.list.equals(EB_UpdataList.UPDATALOACLFILELIST)) {
+            //从数据库中获取所有的文件夹内容
             fileList = DataBaseManager.getInstance(getContext()).queryAll(FileModel.class);
+            //根据文件夹构建localFileAdapter
             localFileAdapter = new LoaclFileAdapter(getContext(), fileList);
+            //设置adapter为localFileAdapter
             recycler_fileall_list.setAdapter(localFileAdapter);
+            //设置底部文本内容
             textview_filelocal_bottom.setText(String.format("总共有 " + fileList.size() + " 个文件夹"));
         }
 
